@@ -90,6 +90,12 @@ Public Class Form1
                         Dialog_AskInfo.PictureBox_tvg_logo.Image = Nothing
                         Dialog_AskInfo.PictureBox_tvg_logo.BackgroundImage = Nothing
                     End If
+                Case 7
+                    mod_var.Pays = OldAnswer
+                Case 8
+                    mod_var.Desc = OldAnswer
+                Case 9
+                    mod_var.Cat = OldAnswer
 
             End Select
         End If
@@ -897,6 +903,19 @@ SubtitleTrackID2, SubtitleTrackName2, SubtitleCodec2, SubtitleLang2, SubtitleDes
 
                 Else
                     'L'entrée existe , on va afficher un récap avec des textbox grisé. Le bouton Modifier qui permet de modifier l'entrée, un bouton Passer qui permettra de continuer le scan
+                    UpdateDialog(1, RNomChaine)
+                    UpdateDialog(2, RNomEPG)
+                    UpdateDialog(3, RNoChaine)
+                    UpdateDialog(4, RGroupChaine)
+                    UpdateDialog(5, RTimeshift)
+                    'Lien du logo de la chaine 
+                    UpdateDialog(6, RLinkLogo)
+                    UpdateDialog(7, RPays)
+                    UpdateDialog(8, RDescription)
+                    UpdateDialog(9, RCatChaine)
+
+
+                    Dialog_AskInfo.ShowDialog()
 
                 End If
 
