@@ -168,6 +168,7 @@ AudioID2='" & AudioTrackID2 & "',AudioName2='" & AudioTrackName2 & "',AudioCodec
 SubID1=,'" & SubTrackID1 & "',SubName1='" & SubTrackName1 & "',SubCodec1='" & SubCodec1 & "',SubLang1='" & SubLang1 & "',SubDesc1='" & SubDesc1 & "',SubOriginalCodec1='" & SubOriginalCodec1 & "',
 SubID2=,'" & SubTrackID2 & "',SubName2='" & SubTrackName2 & "',SubCodec2='" & SubCodec2 & "',SubLang2='" & SubLang2 & "',SubDesc2='" & SubDesc2 & "',SubOriginalCodec2='" & SubOriginalCodec2 & "' WHERE NoCanal='" & NoCanal & " ');"
             SQLCommand.ExecuteNonQuery()
+            Return True
         Else
 
             SQLCommand = SQLConnexion.CreateCommand()
