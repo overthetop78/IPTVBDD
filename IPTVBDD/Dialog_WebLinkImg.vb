@@ -108,8 +108,12 @@ Public Class Dialog_WebLinkImg
     End Sub
 
     Private Sub PictureBox_TestIMG_LoadProgressChanged(sender As Object, e As ProgressChangedEventArgs) Handles PictureBox_TestIMG.LoadProgressChanged
-        While e.ProgressPercentage >= 75
-            If e.ProgressPercentage > 75 Then ProgressBar_IMGLoad.Maximum = e.ProgressPercentage
+        Dim percent As Integer = 75
+        If e.ProgressPercentage > 75 Then
+            ProgressBar_IMGLoad.Maximum = e.ProgressPercentage
+            percent = e.ProgressPercentage
+        End If
+        While e.ProgressPercentage < percent
             Application.DoEvents()
             ProgressBar_IMGLoad.Value = e.ProgressPercentage
         End While

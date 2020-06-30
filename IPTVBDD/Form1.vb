@@ -545,6 +545,7 @@ CREATE TABLE '" & Adresse & "' (
         Else
             StatutBar_InfoBGW.BackColor = Color.Green
             StatutBar_InfoBGW.ToolTipText = "Opération terminée !"
+            TabControl1.SelectedIndex = 1 'affiche la page Base de données
         End If
         Btn_StopScan.Enabled = False
         NumericUpDown1.ReadOnly = False
@@ -563,7 +564,7 @@ CREATE TABLE '" & Adresse & "' (
         StatutBar_NoCanal.Text = CStr(i)
         Application.DoEvents()
         If VlcControl1.VlcMediaPlayer.CouldPlay = True Then
-            Threading.Thread.Sleep(1000)
+            Threading.Thread.Sleep(2000)
             If VlcControl1.IsPlaying = True Then
                 UpdateList("Adresse : " & FullAddress & i) ' Adresse du lien 
 

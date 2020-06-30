@@ -10,9 +10,11 @@ Public Class Dialog_AskInfo
         'Bouton modifier
         Me.DialogResult = System.Windows.Forms.DialogResult.OK
         'On va donc ajouter la ligne à la base de données en appelant la fonction RecData
-        If mod_var.RecData = False Then
+        Dim Result As Boolean = mod_var.RecData
+        If Result = False Then
             Exit Sub
         Else
+
             Me.Close()
         End If
 

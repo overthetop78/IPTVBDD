@@ -166,6 +166,19 @@ SubTrackID2 & "','" & SubTrackName2 & "','" & SubCodec2 & "','" & SubLang2 & "',
     "');"
         SQLCommand.ExecuteNonQuery()
 
+        'On affiche dans le tabBDD les info recuperée
+        With Form1
+            .lbl_RNoCanal.Text = CStr(NoCanal)
+            .lbl_RNomChaine.Text = HtmlDecode(NomChaine)
+            .lbl_RNoChaine.Text = tvg_chno
+            .lbl_RNomEPG.Text = HtmlDecode(tvg_id)
+            .Lbl_RTimeShift.Text = tvg_shift
+            .lbl_RGroupChannel.Text = HtmlDecode(group_channel)
+            .lbl_RCategorie.Text = HtmlDecode(Cat)
+            .lbl_RPays.Text = HtmlDecode(Pays)
+            .txt_RDescription.Text = HtmlDecode(Desc)
+            .PictureBox_RLinkImg.ImageLocation = tvg_logo
+        End With
 
         Return True
 
