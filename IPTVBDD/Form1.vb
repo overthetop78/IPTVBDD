@@ -573,9 +573,81 @@ SubtitleTrackID2, SubtitleTrackName2, SubtitleCodec2, SubtitleLang2, SubtitleDes
                     End Try
             'Active Scan
                 Case 3
+                    'On scanne seulement les lignes de la base de données. On va lire ligne par ligne
+                    Dim SQLConnexion As SqliteConnection = New SqliteConnection(DBConnect)
+                    SQLConnexion.Open()
+                    SQLCommand = SQLConnexion.CreateCommand()
+                    Dim cmd As String = "SELECT * FROM '" & Adresse & "';"
+                    SQLCommand.CommandText = cmd
+                    Dim Result As SqliteDataReader = SQLCommand.ExecuteReader()
+                    'Si la table ne contient aucune ligne on quitte la sub
+                    If Result.HasRows = False Then Exit Sub
+                    'sinon on continue 
+                    'Mainenant on va lire un par un les fichiers 
+                    Dim ResNoCanal As Integer = 0
+                    While Result.Read
+                        'Pour qu'on puisse arreter quand on veut
+                        If e.Cancel = False Then
+
+                            If BGW.CancellationPending = True Then
+                                e.Cancel = True
+                                Exit While
+                            End If
+                        Else
+                            Exit While
+                        End If
+                        ResNoCanal = Result.GetInt32(0)
+                            ModifNumericUpDown(ResNoCanal)
+                            ResultScan = ScannerFull(ResNoCanal, BGWScantype, BGWFichierM3U, BGWFullAddress, BGWAdresseHTTP)
+                        End While
+                    Result.Close()
+                    SQLConnexion.Close()
 
             'Inactive Scan
                 Case 4
+                    'On scanne seulement les lignes manquantes de la base de données. Rien de plus simple, on commence de 1 et on teste si le NoCanal existe.
+                    'Si oui, on passe au suivant, si non , on fait la recherche. 
+                    Dim SQLConnexion As SqliteConnection = New SqliteConnection(DBConnect)
+                    SQLConnexion.Open()
+                    SQLCommand = SQLConnexion.CreateCommand()
+                    Dim cmd As String = "SELECT * FROM '" & Adresse & "';"
+                    SQLCommand.CommandText = cmd
+                    Dim Result As SqliteDataReader = SQLCommand.ExecuteReader()
+                    'Si la table ne contient aucune ligne on quitte la sub
+                    If Result.HasRows = False Then Exit Sub
+                    Result.Close()
+                    SQLConnexion.Close()
+                    'sinon on continue 
+                    'On va lire un par un le NoCanal 
+                    'On va d'abord regarder par ou on commence grace au NumericUpDown 
+                    Dim i As Integer = NumericUpDown1.Value
+                    'On va chercher dans la base de données si i existe , si oui on laisse tomber, si non, on continue de scanner 
+                    'Tant que Cancel n'est pas vrai on peut continuer de scanner 
+                    While e.Cancel = False
+                        'Mais si la demande d'arreter de scanner a été faite, on l'execute
+                        If BGW.CancellationPending = True Then
+                            e.Cancel = True
+                            SQLConnexion.Close()
+                            Exit While
+                        End If
+                        'on peut commencer le scan 
+                        'On vérifie que i n'est pas la BDD
+                        SQLConnexion.Open()
+                        SQLCommand = SQLConnexion.CreateCommand()
+                        cmd = "SELECT * FROM '" & Adresse & "' WHERE NoCanal=" & i & ";"
+                        SQLCommand.CommandText = cmd
+                        Result = SQLCommand.ExecuteReader
+                        'Si le resultat ne contient pas la ligne 
+
+                        If Result.HasRows = False Then
+                                ResultScan = ScannerFull(i, BGWScantype, BGWFichierM3U, BGWFullAddress, BGWAdresseHTTP)
+                            End If
+
+                        i = i + 1
+                        ModifNumericUpDown(i)
+                        Result.Close()
+                        SQLConnexion.Close()
+                    End While
 
             End Select
         Catch ex As Exception

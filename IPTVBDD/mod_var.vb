@@ -172,6 +172,8 @@ Module mod_var
                 "',SubID2='" & SubTrackID2 & "',SubName2='" & SubTrackName2 & "',SubCodec2='" & SubCodec2 & "',SubLang2='" & SubLang2 & "',SubDesc2='" & SubDesc2 & "',SubOriginalCodec2='" & SubOriginalCodec2 & "' WHERE NoCanal=" & NoCanal & ";"
             SQLCommand.CommandText = cmd
             SQLCommand.ExecuteNonQuery()
+            Result.Close()
+
             Return True
         Else
 
@@ -205,6 +207,7 @@ SubID1,SubName1,SubCodec1,SubLang1,SubDesc1,SubOriginalCodec1,SubID2,SubName2,Su
 
             Return True
         End If
+        SQLConnexion.Close()
     End Function
 
 End Module
