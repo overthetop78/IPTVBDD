@@ -29,6 +29,8 @@ Public Class Form1
     Public Shared SubtitleLevel2 As Integer = 0, SubtitleOriginalCodec2 As String = Nothing, SubtitleProfile2 As Integer = 0
     Public Shared SubtitleTrackID As Integer = 0, SubtitleTrackName As String = Nothing, SubtitleTrackID2 As Integer = 0, SubtitleTrackName2 As String = Nothing
 
+
+
     Private Delegate Sub ModifNumericUpDownDelegate(ByVal i As Integer)
     Private Sub ModifNumericUpDown(ByVal i As Integer)
         If Me.InvokeRequired Then
@@ -533,7 +535,42 @@ SubtitleTrackID2, SubtitleTrackName2, SubtitleCodec2, SubtitleLang2, SubtitleDes
                     End Try
             'Liste Scan
                 Case 2
+                    'On scanne la liste M3U en utilisant la fonction approprié 
+                    Try
 
+                        'Il va falloir lire le fichier M3U ligne par ligne et récuperer le numéro de canal
+                        Dim Strm As StreamReader = New StreamReader(BGWFichierM3U), ListeM3U As New List(Of String), i As Integer
+                            While Strm.EndOfStream <> True
+                                ListeM3U.Add(Strm.ReadLine)
+                            End While
+                            ' On a notre List(of string) on peut maintenant scanner les lignes pour trouver le http 
+                            Dim iii As Integer = 0, ii As Integer = 0, Ligne As String = Nothing
+                        For ii = 0 To ListeM3U.Count - 1
+                            If e.Cancel = False Then
+
+                                If BGW.CancellationPending = True Then
+                                    e.Cancel = True
+                                    Exit For
+                                End If
+                            Else
+                                Exit For
+                            End If
+                            If ListeM3U.Item(ii).Contains("#EXTINF") = True Then
+                                    iii = ii + 1
+                                    If ListeM3U.Item(iii).Contains(BGWFullAddress) Then
+                                        Ligne = ListeM3U.Item(iii)
+                                        i = CInt(Replace(Ligne, BGWFullAddress, ""))
+                                    ModifNumericUpDown(i)
+                                    ResultScan = ScannerFull(i, BGWScantype, BGWFichierM3U, BGWFullAddress, BGWAdresseHTTP)
+                                    End If
+                                ii = ii + 1
+                            End If
+                        Next
+
+
+                    Catch ex As Exception
+                        MsgBox(ex.Message, vbApplicationModal)
+                    End Try
             'Active Scan
                 Case 3
 
