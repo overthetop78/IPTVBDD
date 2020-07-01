@@ -128,6 +128,9 @@ Public Class Dialog_AskInfo
         txt_tvg_chno.Text = mod_var.tvg_chno
         txt_tvg_shift.Text = mod_var.tvg_shift
         txt_group.Text = mod_var.group_channel
+        txt_categorie.Text = mod_var.Cat
+        txt_Desc.Text = mod_var.Desc
+        txt_Pays.Text = mod_var.Pays
         If txt_NomChaine.Text = Nothing Or txt_NomChaine.Text = "" Then Button_Garder.Enabled = False
         If mod_var.tvg_logo <> Nothing Then PictureBox_tvg_logo.ImageLocation = tvg_logo
     End Sub

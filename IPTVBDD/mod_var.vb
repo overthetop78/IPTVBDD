@@ -155,24 +155,28 @@ Module mod_var
         SQLConnexion.Open()
         'recherche si le NoCanal existe déjà 
         SQLCommand = SQLConnexion.CreateCommand()
-        SQLCommand.CommandText = "SELECT * FROM " & Adresse & " WHERE NoCanal=" & NoCanal & ";"
-        Dim Result As SqliteDataReader = SQLCommand.ExecuteReader()
-
-        If Result.GetString(0) = CStr(NoCanal) Then
+        Dim cmd As String = "SELECT * FROM " & Adresse & " WHERE NoCanal=" & NoCanal & ";"
+        SQLCommand.CommandText = cmd
+        Dim Result As SqliteDataReader = SQLCommand.ExecuteReader(), ResultID As String = Nothing
+        While Result.Read
+            ResultID = Result.GetString(0)
+        End While
+        If ResultID = CStr(NoCanal) Then
             SQLCommand = SQLConnexion.CreateCommand()
-            SQLCommand.CommandText = "UPDATE '" & Adresse & " SET 
-NomChaine='" & NomChaine & "',NomEPG='" & tvg_id & "',NoChaine='" & tvg_chno & "',GroupeChaine='" & group_channel & "',LinkLogo='" & tvg_logo & "',Timeshift='" & tvg_shift & "',Description='" & Desc & "',CatChaine='" & Cat & "',Pays='" & Pays & "',
-VideoID='" & VideoTrackID & "',VideoName='" & VideoTrackName & "',VideoCodec='" & VideoCodec & "',VideoV='" & VideoV & "',VideoH='" & VideoH & "',VideoFPS='" & VideoFPS & "',VideoOriginalCodec='" & VideoOriginalCodec & "',
-AudioID1='" & AudioTrackID1 & "',AudioName1='" & AudioTrackName1 & "',AudioCodec1='" & AudioCodec1 & "',AudioLang1='" & AudioLang1 & "',AudioChannel1='" & AudioChannel1 & "',AudioRate1='" & AudioRate1 & "',AudioOriginalCodec1='" & AudioOriginalCodec1 & "',
-AudioID2='" & AudioTrackID2 & "',AudioName2='" & AudioTrackName2 & "',AudioCodec2='" & AudioCodec2 & "',AudioLang2='" & AudioLang2 & "',AudioChannel2='" & AudioChannel2 & "',AudioRate2='" & AudioRate2 & "',AudioOriginalCodec2='" & AudioOriginalCodec2 & "',
-SubID1=,'" & SubTrackID1 & "',SubName1='" & SubTrackName1 & "',SubCodec1='" & SubCodec1 & "',SubLang1='" & SubLang1 & "',SubDesc1='" & SubDesc1 & "',SubOriginalCodec1='" & SubOriginalCodec1 & "',
-SubID2=,'" & SubTrackID2 & "',SubName2='" & SubTrackName2 & "',SubCodec2='" & SubCodec2 & "',SubLang2='" & SubLang2 & "',SubDesc2='" & SubDesc2 & "',SubOriginalCodec2='" & SubOriginalCodec2 & "' WHERE NoCanal='" & NoCanal & " ');"
+            cmd = "UPDATE '" & Adresse & "' SET NomChaine='" &
+                NomChaine & "',NomEPG='" & tvg_id & "',NoChaine='" & tvg_chno & "',GroupeChaine='" & group_channel & "',LinkLogo='" & tvg_logo & "',Timeshift='" & tvg_shift & "',Description='" & Desc & "',CatChaine='" & Cat & "',Pays='" & Pays &
+                "',VideoID='" & VideoTrackID & "',VideoName='" & VideoTrackName & "',VideoCodec='" & VideoCodec & "',VideoV='" & VideoV & "',VideoH='" & VideoH & "',VideoFPS='" & VideoFPS & "',VideoOriginalCodec='" & VideoOriginalCodec &
+                "',AudioID1='" & AudioTrackID1 & "',AudioName1='" & AudioTrackName1 & "',AudioCodec1='" & AudioCodec1 & "',AudioLang1='" & AudioLang1 & "',AudioChannel1='" & AudioChannel1 & "',AudioRate1='" & AudioRate1 & "',AudioOriginalCodec1='" & AudioOriginalCodec1 &
+                "',AudioID2='" & AudioTrackID2 & "',AudioName2='" & AudioTrackName2 & "',AudioCodec2='" & AudioCodec2 & "',AudioLang2='" & AudioLang2 & "',AudioChannel2='" & AudioChannel2 & "',AudioRate2='" & AudioRate2 & "',AudioOriginalCodec2='" & AudioOriginalCodec2 &
+                "',SubID1='" & SubTrackID1 & "',SubName1='" & SubTrackName1 & "',SubCodec1='" & SubCodec1 & "',SubLang1='" & SubLang1 & "',SubDesc1='" & SubDesc1 & "',SubOriginalCodec1='" & SubOriginalCodec1 &
+                "',SubID2='" & SubTrackID2 & "',SubName2='" & SubTrackName2 & "',SubCodec2='" & SubCodec2 & "',SubLang2='" & SubLang2 & "',SubDesc2='" & SubDesc2 & "',SubOriginalCodec2='" & SubOriginalCodec2 & "' WHERE NoCanal=" & NoCanal & ";"
+            SQLCommand.CommandText = cmd
             SQLCommand.ExecuteNonQuery()
             Return True
         Else
 
             SQLCommand = SQLConnexion.CreateCommand()
-            SQLCommand.CommandText = "INSERT INTO '" & Adresse & "' (
+            cmd = "INSERT INTO '" & Adresse & "' (
 NoCanal,NomChaine,NomEPG,NoChaine,GroupeChaine,LinkLogo,Timeshift,Description,CatChaine,Pays,VideoID,VideoName,VideoCodec,VideoV,VideoH,VideoFPS,VideoOriginalCodec,
 AudioID1,AudioName1,AudioCodec1,AudioLang1,AudioChannel1,AudioRate1,AudioOriginalCodec1,AudioID2,AudioName2,AudioCodec2,AudioLang2,AudioChannel2,AudioRate2,AudioOriginalCodec2,
 SubID1,SubName1,SubCodec1,SubLang1,SubDesc1,SubOriginalCodec1,SubID2,SubName2,SubCodec2,SubLang2,SubDesc2,SubOriginalCodec2) VALUES ('" &
@@ -182,6 +186,7 @@ SubID1,SubName1,SubCodec1,SubLang1,SubDesc1,SubOriginalCodec1,SubID2,SubName2,Su
     SubTrackID1 & "','" & SubTrackName1 & "','" & SubCodec1 & "','" & SubLang1 & "','" & SubDesc1 & "','" & SubOriginalCodec1 & "','" &
     SubTrackID2 & "','" & SubTrackName2 & "','" & SubCodec2 & "','" & SubLang2 & "','" & SubDesc2 & "','" & SubOriginalCodec2 &
         "');"
+            SQLCommand.CommandText = cmd
             SQLCommand.ExecuteNonQuery()
 
             'On affiche dans le tabBDD les info recuperée

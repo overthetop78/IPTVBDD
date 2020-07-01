@@ -96,7 +96,8 @@ Public Class Form1
                     mod_var.Desc = OldAnswer
                 Case 9
                     mod_var.Cat = OldAnswer
-
+                Case Else
+                    Exit Select
             End Select
         End If
     End Sub
@@ -337,22 +338,22 @@ SubtitleTrackID2, SubtitleTrackName2, SubtitleCodec2, SubtitleLang2, SubtitleDes
                         ' on va tester si la ligne existe déjà . Si oui , on vérifiera que la table associée existe
                         ' Si non, on va créer la ligne et la table 
                         Dim TestLigneDB As Boolean
-
-                        SQLCommand.CommandText = "SELECT * FROM InfoIPTV WHERE AdresseHTTP='" & AdresseHTTP & "';"
+                        Dim cmd As String = "SELECT * FROM InfoIPTV WHERE AdresseHTTP='" & AdresseHTTP & "';"
+                        SQLCommand.CommandText = cmd
                         TestLigneDB = SQLCommand.ExecuteScalar
 
                         If TestLigneDB = False Then
                             'creation de la ligne
                             SQLCommand = SQLConnexion.CreateCommand()
-                            SQLCommand.CommandText = "INSERT INTO InfoIPTV (HTTPVer,AdresseHTTP,HTTPPort,Pseudo,Pass) VALUES ('" & HTTPVer & "','" & AdresseHTTP & "','" & HTTPPort & "','" & Pseudo & "','" & Pass & "');"
+                            cmd = "INSERT INTO InfoIPTV (HTTPVer,AdresseHTTP,HTTPPort,Pseudo,Pass) VALUES ('" & HTTPVer & "','" & AdresseHTTP & "','" & HTTPPort & "','" & Pseudo & "','" & Pass & "');"
+                            SQLCommand.CommandText = cmd
                             SQLCommand.ExecuteNonQuery()
                             'creation de la table . Il faut : le numéro du canal (du http), le Nom de la chaine, le nom EPG de la chaine, Le numéro de la chaine, le groupe de la chaine, le lien vers le logo de la chaine, le timeshift, 
                             ' description de la chaine, Type de chaines (Sports, Generalistes, Musicales, Radio, Cinema, Divertissements, Jeunesse, Decouvertes, Locales, Infos,etc..), Pays, 
                             ' Type video (AVC, HEVC, MPEG2), résolution video (1920*1080), définition video (1080P, 720P, 540P), FPS,  Nombre de langage, Langue 1 (Fra), Langue 1 Type (AAC, Dolby Digital), Langue 2 (Eng) Langue 2 Type (AAC, Dolby Digital)
                             ' Nombre de Sous-titre, Sous-titre 1 (Fra), Sous-Titre 2 (Eng) 
                             SQLCommand = SQLConnexion.CreateCommand()
-                            SQLCommand.CommandText = "
-CREATE TABLE '" & Adresse & "' (
+                            cmd = "CREATE TABLE '" & Adresse & "' (
     NoCanal INT NOT NULL PRIMARY KEY,
     NomChaine VARCHAR(100) NOT NULL,
     NomEPG VARCHAR(100),
@@ -398,6 +399,8 @@ CREATE TABLE '" & Adresse & "' (
     SubOriginalCodec2 VARCHAR(10)
     );"
 
+                            SQLCommand.CommandText = cmd
+
                             SQLCommand.ExecuteNonQuery()
                         End If
                         SQLConnexion.Close()
@@ -420,7 +423,7 @@ CREATE TABLE '" & Adresse & "' (
             Dim SQLConnexion As SqliteConnection = New SqliteConnection(DBConnect)
             SQLConnexion.Open()
             SQLCommand = SQLConnexion.CreateCommand()
-            SQLCommand.CommandText = "
+            Dim cmd As String = "
                             CREATE TABLE InfoIPTV (
                                 id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, 
                                 HTTPVer VARCHAR(10) NOT NULL, 
@@ -428,6 +431,7 @@ CREATE TABLE '" & Adresse & "' (
                                 HTTPPort VARCHAR(5) NOT NULL,
                                 Pseudo VARCHAAR(50) NOT NULL, 
                                 Pass VARCHAR(50) NOT NULL);"
+            SQLCommand.CommandText = cmd
             SQLCommand.ExecuteNonQuery()
             SQLConnexion.Close()
         Catch ex As Exception
@@ -454,7 +458,8 @@ CREATE TABLE '" & Adresse & "' (
             Dim SQLConnexion As SqliteConnection = New SqliteConnection(DBConnect)
             SQLConnexion.Open()
             SQLCommand = SQLConnexion.CreateCommand()
-            SQLCommand.CommandText = "SELECT * FROM InfoIPTV WHERE AdresseHTTP='" & AdresseHTTP & "';"
+            Dim cmd As String = "SELECT * FROM InfoIPTV WHERE AdresseHTTP='" & AdresseHTTP & "';"
+            SQLCommand.CommandText = cmd
             Dim Result As SqliteDataReader = SQLCommand.ExecuteReader()
             Do While Result.Read
                 ID = Result.GetString(0)

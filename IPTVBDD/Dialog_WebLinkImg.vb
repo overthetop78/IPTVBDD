@@ -19,8 +19,11 @@ Public Class Dialog_WebLinkImg
             NomIMG = NomIMG & ".png"
             Dim SSH_Host As String = "82.64.11.82"
             Dim SSH_Port As Integer = 2222
-            Dim SSH_Username As String = "8fTLuKoRxlm+0jZq+5hbug==" 'Crypté
-            Dim SSH_Password As String = "5UzBMMkt4w5pgbZ/7UT/9w==" 'Crypté
+            Dim Rep As Boolean = AESCrypt.RequestCode
+            If Rep = False Then Exit Try
+            Dim SSH_Username As String = "OtjZPxJI5pv39Xj9jRSO8w==" 'Crypté
+            Dim SSH_Password As String = "GTkylnqTVe2dvUwfL50BNw ==" 'Crypté
+
 
             Dim Connexion As New PasswordConnectionInfo(SSH_Host, SSH_Port, AESCrypt.DeCrypter(SSH_Username, code), AESCrypt.DeCrypter(SSH_Password, code))
             Dim SSH_Client As New SshClient(Connexion)
