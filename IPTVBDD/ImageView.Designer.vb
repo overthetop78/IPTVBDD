@@ -27,6 +27,7 @@ Partial Class ImageView
         Me.PictureView = New System.Windows.Forms.PictureBox()
         Me.ScrollPic = New System.Windows.Forms.HScrollBar()
         Me.lbl_ImageName = New System.Windows.Forms.Label()
+        Me.Btn_AddLogo = New System.Windows.Forms.Button()
         CType(Me.PictureView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -83,6 +84,16 @@ Partial Class ImageView
         Me.lbl_ImageName.TabIndex = 4
         Me.lbl_ImageName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
+        'Btn_AddLogo
+        '
+        Me.Btn_AddLogo.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.Btn_AddLogo.Location = New System.Drawing.Point(178, 487)
+        Me.Btn_AddLogo.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.Btn_AddLogo.Name = "Btn_AddLogo"
+        Me.Btn_AddLogo.Size = New System.Drawing.Size(158, 35)
+        Me.Btn_AddLogo.TabIndex = 5
+        Me.Btn_AddLogo.Text = "Ajouter Logo"
+        '
         'ImageView
         '
         Me.AcceptButton = Me.OK_Button
@@ -91,6 +102,7 @@ Partial Class ImageView
         Me.BackColor = System.Drawing.Color.White
         Me.CancelButton = Me.Cancel_Button
         Me.ClientSize = New System.Drawing.Size(565, 541)
+        Me.Controls.Add(Me.Btn_AddLogo)
         Me.Controls.Add(Me.lbl_ImageName)
         Me.Controls.Add(Me.ScrollPic)
         Me.Controls.Add(Me.PictureView)
@@ -99,9 +111,7 @@ Partial Class ImageView
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.MaximizeBox = False
-        Me.MinimizeBox = False
         Me.Name = "ImageView"
-        Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "ImageView"
         Me.TopMost = True
@@ -114,4 +124,5 @@ Partial Class ImageView
     Friend WithEvents PictureView As PictureBox
     Friend WithEvents ScrollPic As HScrollBar
     Friend WithEvents lbl_ImageName As Label
+    Friend WithEvents Btn_AddLogo As Button
 End Class

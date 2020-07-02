@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "IPTVBDD", "IPTVBDD\IPTVBDD.vbproj", "{7FFFF598-2322-4488-9021-70B9A01A5285}"
 EndProject
 Global
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		IPTVBDD_x64|Any CPU = IPTVBDD_x64|Any CPU

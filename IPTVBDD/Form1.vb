@@ -5,6 +5,7 @@ Imports Vlc.DotNet.Core
 Imports Vlc.DotNet.Forms
 Imports Vlc.DotNet.Core.Interops
 Imports Vlc.DotNet.Core.Interops.Signatures
+Imports System.Web.HttpUtility
 
 
 Public Class Form1
@@ -28,9 +29,21 @@ Public Class Form1
     Public Shared SubtitleCodec2 As String = Nothing, SubtitleTrack2 As SubtitleTrack, SubtitleTrackEnc2 As String = Nothing, SubtitleBitrate2 As Integer = 0, SubtitleDesc2 As String = Nothing, SubtitleID2 As Integer = 0, SubtitleLang2 As String = Nothing
     Public Shared SubtitleLevel2 As Integer = 0, SubtitleOriginalCodec2 As String = Nothing, SubtitleProfile2 As Integer = 0
     Public Shared SubtitleTrackID As Integer = 0, SubtitleTrackName As String = Nothing, SubtitleTrackID2 As Integer = 0, SubtitleTrackName2 As String = Nothing
+    Public Shared FormActive As Integer = 0
 
+    Private Delegate Sub AffichageDelegate()
 
-
+    Private Sub AffichageDialogAsk()
+        If Me.InvokeRequired Then
+            Me.Invoke(New AffichageDelegate(AddressOf AffichageDialogAsk))
+        Else
+            Try
+                Dialog_AskInfo.ShowDialog(Me)
+            Catch ex As Exception
+                MsgBox(ex.Message, vbApplicationModal)
+            End Try
+        End If
+    End Sub
     Private Delegate Sub ModifNumericUpDownDelegate(ByVal i As Integer)
     Private Sub ModifNumericUpDown(ByVal i As Integer)
         If Me.InvokeRequired Then
@@ -77,13 +90,13 @@ Public Class Form1
         Else
             Select Case Question
                 Case 1
-                    mod_var.NomChaine = OldAnswer
+                    mod_var.NomChaine = HtmlDecode(OldAnswer)
                 Case 2
-                    mod_var.tvg_id = OldAnswer
+                    mod_var.tvg_id = HtmlDecode(OldAnswer)
                 Case 3
                     mod_var.tvg_chno = OldAnswer
                 Case 4
-                    mod_var.group_channel = OldAnswer
+                    mod_var.group_channel = HtmlDecode(OldAnswer)
                 Case 5
                     mod_var.tvg_shift = OldAnswer
                 Case 6
@@ -93,11 +106,11 @@ Public Class Form1
                         Dialog_AskInfo.PictureBox_tvg_logo.BackgroundImage = Nothing
                     End If
                 Case 7
-                    mod_var.Pays = OldAnswer
+                    mod_var.Pays = HtmlDecode(OldAnswer)
                 Case 8
-                    mod_var.Desc = OldAnswer
+                    mod_var.Desc = HtmlDecode(OldAnswer)
                 Case 9
-                    mod_var.Cat = OldAnswer
+                    mod_var.Cat = HtmlDecode(OldAnswer)
                 Case Else
                     Exit Select
             End Select
@@ -199,8 +212,8 @@ SubtitleTrackID2, SubtitleTrackName2, SubtitleCodec2, SubtitleLang2, SubtitleDes
         NumericUpDown1.ReadOnly = False
 
         'Dialog_AskInfo 
-        Dialog_AskInfo.Owner = Me
-        Dialog_AskInfo.StartPosition = FormStartPosition.CenterScreen
+        'Dialog_AskInfo.Owner = Me
+        'Dialog_AskInfo.StartPosition = FormStartPosition.CenterScreen
 
         If File.Exists(FileWebLogo) = False Or File.GetCreationTime(FileWebLogo) < DateTime.Today Or File.GetLastWriteTime(FileWebLogo) < DateTime.Today Then
             Dim Web As New HtmlAgilityPack.HtmlWeb, url As String = "http://informaweb.freeboxos.fr/iptv/logos_tv/"
@@ -1004,6 +1017,7 @@ SubtitleTrackID2, SubtitleTrackName2, SubtitleCodec2, SubtitleLang2, SubtitleDes
                         NomChaine = Mid(NomChaine, 2)
                     End While
                     'Ouverture de la fenetre de dialogue avec les infos trouvées dans le fichier M3U
+
                     UpdateDialog(1, NomChaine)
                     UpdateDialog(2, tvg_id)
                     UpdateDialog(3, tvg_chno)
@@ -1012,11 +1026,12 @@ SubtitleTrackID2, SubtitleTrackName2, SubtitleCodec2, SubtitleLang2, SubtitleDes
                     'Lien du logo de la chaine 
                     UpdateDialog(6, tvg_logo)
 
-                    Dialog_AskInfo.ShowDialog()
-
+                    AffichageDialogAsk()
+                    Dialog_AskInfo.Dispose()
 
                 Else
                     'L'entrée existe , on va afficher un récap avec des textbox grisé. Le bouton Modifier qui permet de modifier l'entrée, un bouton Passer qui permettra de continuer le scan
+
                     UpdateDialog(1, RNomChaine)
                     UpdateDialog(2, RNomEPG)
                     UpdateDialog(3, RNoChaine)
@@ -1028,9 +1043,8 @@ SubtitleTrackID2, SubtitleTrackName2, SubtitleCodec2, SubtitleLang2, SubtitleDes
                     UpdateDialog(8, RDescription)
                     UpdateDialog(9, RCatChaine)
 
-
-                    Dialog_AskInfo.ShowDialog()
-
+                    AffichageDialogAsk()
+                    Dialog_AskInfo.Dispose()
                 End If
 
 
@@ -1073,4 +1087,6 @@ SubtitleTrackID2, SubtitleTrackName2, SubtitleCodec2, SubtitleLang2, SubtitleDes
     Private Sub ListBox1_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles ListBox1.MouseDoubleClick
         ListBox1.Items.Clear()
     End Sub
+
+
 End Class

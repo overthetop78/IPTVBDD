@@ -275,9 +275,7 @@ Partial Class Dialog_AskInfo
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.MaximizeBox = False
-        Me.MinimizeBox = False
         Me.Name = "Dialog_AskInfo"
-        Me.ShowIcon = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Modification des Infos de la chaine "
         Me.TopMost = True

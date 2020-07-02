@@ -62,8 +62,23 @@ Public Class ImageView
     End Sub
 
     Private Sub ScrollPic_Scroll(sender As Object, e As ScrollEventArgs) Handles ScrollPic.Scroll
-        PictureView.ImageLocation = ImageListURL.Item(ScrollPic.Value)
-        lbl_ImageName.Text = ImageListName.Item(ScrollPic.Value)
+        Try
+            PictureView.ImageLocation = ImageListURL.Item(ScrollPic.Value)
+            lbl_ImageName.Text = ImageListName.Item(ScrollPic.Value)
+            Threading.Thread.Sleep(500)
+        Catch ex As Exception
+            MsgBox(ex.Message, vbApplicationModal)
+        End Try
+    End Sub
+
+    Private Sub Btn_AddLogo_Click(sender As Object, e As EventArgs) Handles Btn_AddLogo.Click
+        Dim Confirm As MsgBoxResult = MsgBox("Vous n'avez pas trouver le bon logo ?" & vbCrLf & "Voulez-vous en ajouter une nouvelle ?", vbApplicationModal + vbInformation + vbYesNo, "Confirmation")
+        If Confirm = MsgBoxResult.No Then
+            Exit Sub
+        Else
+            Dialog_WebLinkImg.ShowDialog()
+        End If
+
     End Sub
 
     Private Sub OK_Button_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OK_Button.Click

@@ -8,7 +8,7 @@ Public Class Dialog_WebLinkImg
     Public Shared TestLink As String = Nothing
     Public Shared IMGH As Integer, IMGHR As Integer, IMGV As Integer, IMGVR As Integer,
     IMGPixel As Imaging.PixelFormat, IMGPalette As Imaging.ColorPalette, IMGRawFormat As Imaging.ImageFormat
-    Public cmd As SshCommand, DossierLogos As String = "/var/www/html/iptv/logos_tv/"
+    Public cmd As SshCommand, DossierLogos As String = "/var/www/html/iptv/logos_tv/", LinkLogos As String = "http://informaweb.freeboxos.free/iptv/logos_tv/"
 
     Private Sub Btn_Accept_Click(sender As Object, e As EventArgs) Handles Btn_Accept.Click
         Me.DialogResult = System.Windows.Forms.DialogResult.OK
@@ -29,25 +29,25 @@ Public Class Dialog_WebLinkImg
             Dim SSH_Client As New SshClient(Connexion)
             Using SSH_Client
                 SSH_Client.Connect()
-
-
-
                 'Il faut vérifier si les fichiers n'existent pas
                 Dim NomLink As String = TestLink
                 While NomLink.IndexOf("/") <> -1
                     NomLink = Mid(NomLink, InStr(NomLink, "/") + 1)
                 End While
                 NomLink = HtmlDecode(NomLink)
-                Dim TestIMGExist As String = "ls | grep " & Chr(34) & DossierLogos & NomLink & Chr(34)
-                cmd = SSH_Client.RunCommand(TestIMGExist)
-                If cmd.Result <> "" Then MsgBox(cmd.Result, vbApplicationModal)
+                Dim TestIMGExist As String = "ls | grep " & Chr(34) & DossierLogos & NomLink & Chr(34), Result As String
+                cmd = SSH_Client.CreateCommand(TestIMGExist)
+                Result = cmd.Execute()
+                If Result <> "" Then MsgBox(cmd.Result, vbApplicationModal)
                 TestIMGExist = "ls | grep " & Chr(34) & DossierLogos & NomIMG & Chr(34)
-                cmd = SSH_Client.RunCommand(TestIMGExist)
-                If cmd.Result <> "" Then MsgBox(cmd.Result, vbApplicationModal)
+                cmd = SSH_Client.CreateCommand(TestIMGExist)
+                Result = cmd.Execute()
+                If Result <> "" Then MsgBox(cmd.Result, vbApplicationModal)
                 'https://upload.wikimedia.org/wikipedia/commons/f/fc/Bravo_TV_%282017_Logo%29.png
                 Dim DownloadIMG As String = "wget " & TestLink & " -o " & Chr(34) & DossierLogos & NomIMG & Chr(34)
-                cmd = SSH_Client.RunCommand(DownloadIMG)
-
+                cmd = SSH_Client.CreateCommand(DownloadIMG)
+                Result = cmd.Execute()
+                Dialog_AskInfo.PictureBox_tvg_logo.ImageLocation = LinkLogos & NomIMG
                 SSH_Client.Disconnect()
 
             End Using
@@ -56,6 +56,7 @@ Public Class Dialog_WebLinkImg
             MsgBox(ex.Message, vbApplicationModal + vbExclamation + vbOKOnly, "Erreur")
         End Try
         Me.Close()
+        Me.Dispose()
     End Sub
 
     Private Sub Btn_Cancel_Click(sender As Object, e As EventArgs) Handles Btn_Cancel.Click

@@ -128,17 +128,17 @@ Partial Class Form1
         Me.lbl_VideoCodec = New System.Windows.Forms.Label()
         Me.lbl_NameChannel = New System.Windows.Forms.Label()
         Me.TabBDD = New System.Windows.Forms.TabPage()
-        Me.CheckBox_ShowLogs = New System.Windows.Forms.CheckBox()
-        Me.lbl_RNomChaine = New System.Windows.Forms.Label()
-        Me.lbl_RNoCanal = New System.Windows.Forms.Label()
-        Me.lbl_RNoChaine = New System.Windows.Forms.Label()
-        Me.lbl_RNomEPG = New System.Windows.Forms.Label()
-        Me.Lbl_RTimeShift = New System.Windows.Forms.Label()
-        Me.lbl_RGroupChannel = New System.Windows.Forms.Label()
-        Me.lbl_RPays = New System.Windows.Forms.Label()
-        Me.lbl_RCategorie = New System.Windows.Forms.Label()
-        Me.PictureBox_RLinkImg = New System.Windows.Forms.PictureBox()
         Me.txt_RDescription = New System.Windows.Forms.TextBox()
+        Me.PictureBox_RLinkImg = New System.Windows.Forms.PictureBox()
+        Me.lbl_RCategorie = New System.Windows.Forms.Label()
+        Me.lbl_RPays = New System.Windows.Forms.Label()
+        Me.lbl_RGroupChannel = New System.Windows.Forms.Label()
+        Me.Lbl_RTimeShift = New System.Windows.Forms.Label()
+        Me.lbl_RNomEPG = New System.Windows.Forms.Label()
+        Me.lbl_RNoChaine = New System.Windows.Forms.Label()
+        Me.lbl_RNoCanal = New System.Windows.Forms.Label()
+        Me.lbl_RNomChaine = New System.Windows.Forms.Label()
+        Me.CheckBox_ShowLogs = New System.Windows.Forms.CheckBox()
         Me.MenuStrip1.SuspendLayout()
         CType(Me.VlcControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.StatusStrip1.SuspendLayout()
@@ -273,28 +273,28 @@ Partial Class Form1
         '
         Me.FullScanToolStripMenuItem.Name = "FullScanToolStripMenuItem"
         Me.FullScanToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5
-        Me.FullScanToolStripMenuItem.Size = New System.Drawing.Size(246, 30)
+        Me.FullScanToolStripMenuItem.Size = New System.Drawing.Size(252, 30)
         Me.FullScanToolStripMenuItem.Text = "Full Scan"
         '
         'ListeScanToolStripMenuItem
         '
         Me.ListeScanToolStripMenuItem.Name = "ListeScanToolStripMenuItem"
         Me.ListeScanToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F6
-        Me.ListeScanToolStripMenuItem.Size = New System.Drawing.Size(246, 30)
+        Me.ListeScanToolStripMenuItem.Size = New System.Drawing.Size(252, 30)
         Me.ListeScanToolStripMenuItem.Text = "Liste Scan"
         '
         'ActiveScanToolStripMenuItem
         '
         Me.ActiveScanToolStripMenuItem.Name = "ActiveScanToolStripMenuItem"
         Me.ActiveScanToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F7
-        Me.ActiveScanToolStripMenuItem.Size = New System.Drawing.Size(246, 30)
+        Me.ActiveScanToolStripMenuItem.Size = New System.Drawing.Size(252, 30)
         Me.ActiveScanToolStripMenuItem.Text = "Active Scan"
         '
         'NoActiveScanToolStripMenuItem
         '
         Me.NoActiveScanToolStripMenuItem.Name = "NoActiveScanToolStripMenuItem"
         Me.NoActiveScanToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F8
-        Me.NoActiveScanToolStripMenuItem.Size = New System.Drawing.Size(246, 30)
+        Me.NoActiveScanToolStripMenuItem.Size = New System.Drawing.Size(252, 30)
         Me.NoActiveScanToolStripMenuItem.Text = "No Active Scan"
         '
         'OpenFileDialog1
@@ -1179,121 +1179,6 @@ Partial Class Form1
         Me.TabBDD.Text = "Base de données"
         Me.TabBDD.UseVisualStyleBackColor = True
         '
-        'CheckBox_ShowLogs
-        '
-        Me.CheckBox_ShowLogs.AutoSize = True
-        Me.CheckBox_ShowLogs.Location = New System.Drawing.Point(1298, 128)
-        Me.CheckBox_ShowLogs.Name = "CheckBox_ShowLogs"
-        Me.CheckBox_ShowLogs.Size = New System.Drawing.Size(129, 24)
-        Me.CheckBox_ShowLogs.TabIndex = 8
-        Me.CheckBox_ShowLogs.Text = "Afficher Logs"
-        Me.CheckBox_ShowLogs.UseVisualStyleBackColor = True
-        '
-        'lbl_RNomChaine
-        '
-        Me.lbl_RNomChaine.BackColor = System.Drawing.Color.Black
-        Me.lbl_RNomChaine.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.lbl_RNomChaine.Font = New System.Drawing.Font("Arial Black", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_RNomChaine.ForeColor = System.Drawing.Color.Lime
-        Me.lbl_RNomChaine.Location = New System.Drawing.Point(258, 3)
-        Me.lbl_RNomChaine.Name = "lbl_RNomChaine"
-        Me.lbl_RNomChaine.Size = New System.Drawing.Size(1008, 61)
-        Me.lbl_RNomChaine.TabIndex = 1
-        Me.lbl_RNomChaine.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'lbl_RNoCanal
-        '
-        Me.lbl_RNoCanal.BackColor = System.Drawing.Color.Black
-        Me.lbl_RNoCanal.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.lbl_RNoCanal.Font = New System.Drawing.Font("Arial Black", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_RNoCanal.ForeColor = System.Drawing.Color.Lime
-        Me.lbl_RNoCanal.Location = New System.Drawing.Point(6, 3)
-        Me.lbl_RNoCanal.Name = "lbl_RNoCanal"
-        Me.lbl_RNoCanal.Size = New System.Drawing.Size(246, 61)
-        Me.lbl_RNoCanal.TabIndex = 2
-        Me.lbl_RNoCanal.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'lbl_RNoChaine
-        '
-        Me.lbl_RNoChaine.BackColor = System.Drawing.Color.Black
-        Me.lbl_RNoChaine.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.lbl_RNoChaine.Font = New System.Drawing.Font("Arial Black", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_RNoChaine.ForeColor = System.Drawing.Color.Lime
-        Me.lbl_RNoChaine.Location = New System.Drawing.Point(6, 64)
-        Me.lbl_RNoChaine.Name = "lbl_RNoChaine"
-        Me.lbl_RNoChaine.Size = New System.Drawing.Size(246, 61)
-        Me.lbl_RNoChaine.TabIndex = 3
-        Me.lbl_RNoChaine.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'lbl_RNomEPG
-        '
-        Me.lbl_RNomEPG.BackColor = System.Drawing.Color.Black
-        Me.lbl_RNomEPG.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.lbl_RNomEPG.Font = New System.Drawing.Font("Arial Black", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_RNomEPG.ForeColor = System.Drawing.Color.Lime
-        Me.lbl_RNomEPG.Location = New System.Drawing.Point(258, 64)
-        Me.lbl_RNomEPG.Name = "lbl_RNomEPG"
-        Me.lbl_RNomEPG.Size = New System.Drawing.Size(1008, 61)
-        Me.lbl_RNomEPG.TabIndex = 4
-        Me.lbl_RNomEPG.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'Lbl_RTimeShift
-        '
-        Me.Lbl_RTimeShift.BackColor = System.Drawing.Color.Black
-        Me.Lbl_RTimeShift.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.Lbl_RTimeShift.Font = New System.Drawing.Font("Arial Black", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Lbl_RTimeShift.ForeColor = System.Drawing.Color.Lime
-        Me.Lbl_RTimeShift.Location = New System.Drawing.Point(6, 125)
-        Me.Lbl_RTimeShift.Name = "Lbl_RTimeShift"
-        Me.Lbl_RTimeShift.Size = New System.Drawing.Size(246, 61)
-        Me.Lbl_RTimeShift.TabIndex = 5
-        Me.Lbl_RTimeShift.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'lbl_RGroupChannel
-        '
-        Me.lbl_RGroupChannel.BackColor = System.Drawing.Color.Black
-        Me.lbl_RGroupChannel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.lbl_RGroupChannel.Font = New System.Drawing.Font("Arial Black", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_RGroupChannel.ForeColor = System.Drawing.Color.Lime
-        Me.lbl_RGroupChannel.Location = New System.Drawing.Point(258, 125)
-        Me.lbl_RGroupChannel.Name = "lbl_RGroupChannel"
-        Me.lbl_RGroupChannel.Size = New System.Drawing.Size(1008, 61)
-        Me.lbl_RGroupChannel.TabIndex = 6
-        Me.lbl_RGroupChannel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'lbl_RPays
-        '
-        Me.lbl_RPays.BackColor = System.Drawing.Color.Black
-        Me.lbl_RPays.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.lbl_RPays.Font = New System.Drawing.Font("Arial Black", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_RPays.ForeColor = System.Drawing.Color.Lime
-        Me.lbl_RPays.Location = New System.Drawing.Point(6, 186)
-        Me.lbl_RPays.Name = "lbl_RPays"
-        Me.lbl_RPays.Size = New System.Drawing.Size(494, 61)
-        Me.lbl_RPays.TabIndex = 7
-        Me.lbl_RPays.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'lbl_RCategorie
-        '
-        Me.lbl_RCategorie.BackColor = System.Drawing.Color.Black
-        Me.lbl_RCategorie.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.lbl_RCategorie.Font = New System.Drawing.Font("Arial Black", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbl_RCategorie.ForeColor = System.Drawing.Color.Lime
-        Me.lbl_RCategorie.Location = New System.Drawing.Point(506, 186)
-        Me.lbl_RCategorie.Name = "lbl_RCategorie"
-        Me.lbl_RCategorie.Size = New System.Drawing.Size(760, 61)
-        Me.lbl_RCategorie.TabIndex = 8
-        Me.lbl_RCategorie.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'PictureBox_RLinkImg
-        '
-        Me.PictureBox_RLinkImg.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.PictureBox_RLinkImg.Location = New System.Drawing.Point(900, 250)
-        Me.PictureBox_RLinkImg.Name = "PictureBox_RLinkImg"
-        Me.PictureBox_RLinkImg.Size = New System.Drawing.Size(366, 273)
-        Me.PictureBox_RLinkImg.TabIndex = 10
-        Me.PictureBox_RLinkImg.TabStop = False
-        '
         'txt_RDescription
         '
         Me.txt_RDescription.AcceptsReturn = True
@@ -1307,6 +1192,121 @@ Partial Class Form1
         Me.txt_RDescription.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
         Me.txt_RDescription.Size = New System.Drawing.Size(888, 270)
         Me.txt_RDescription.TabIndex = 11
+        '
+        'PictureBox_RLinkImg
+        '
+        Me.PictureBox_RLinkImg.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.PictureBox_RLinkImg.Location = New System.Drawing.Point(900, 250)
+        Me.PictureBox_RLinkImg.Name = "PictureBox_RLinkImg"
+        Me.PictureBox_RLinkImg.Size = New System.Drawing.Size(366, 273)
+        Me.PictureBox_RLinkImg.TabIndex = 10
+        Me.PictureBox_RLinkImg.TabStop = False
+        '
+        'lbl_RCategorie
+        '
+        Me.lbl_RCategorie.BackColor = System.Drawing.Color.Black
+        Me.lbl_RCategorie.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.lbl_RCategorie.Font = New System.Drawing.Font("Arial Black", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl_RCategorie.ForeColor = System.Drawing.Color.Lime
+        Me.lbl_RCategorie.Location = New System.Drawing.Point(506, 186)
+        Me.lbl_RCategorie.Name = "lbl_RCategorie"
+        Me.lbl_RCategorie.Size = New System.Drawing.Size(760, 61)
+        Me.lbl_RCategorie.TabIndex = 8
+        Me.lbl_RCategorie.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lbl_RPays
+        '
+        Me.lbl_RPays.BackColor = System.Drawing.Color.Black
+        Me.lbl_RPays.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.lbl_RPays.Font = New System.Drawing.Font("Arial Black", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl_RPays.ForeColor = System.Drawing.Color.Lime
+        Me.lbl_RPays.Location = New System.Drawing.Point(6, 186)
+        Me.lbl_RPays.Name = "lbl_RPays"
+        Me.lbl_RPays.Size = New System.Drawing.Size(494, 61)
+        Me.lbl_RPays.TabIndex = 7
+        Me.lbl_RPays.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lbl_RGroupChannel
+        '
+        Me.lbl_RGroupChannel.BackColor = System.Drawing.Color.Black
+        Me.lbl_RGroupChannel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.lbl_RGroupChannel.Font = New System.Drawing.Font("Arial Black", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl_RGroupChannel.ForeColor = System.Drawing.Color.Lime
+        Me.lbl_RGroupChannel.Location = New System.Drawing.Point(258, 125)
+        Me.lbl_RGroupChannel.Name = "lbl_RGroupChannel"
+        Me.lbl_RGroupChannel.Size = New System.Drawing.Size(1008, 61)
+        Me.lbl_RGroupChannel.TabIndex = 6
+        Me.lbl_RGroupChannel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Lbl_RTimeShift
+        '
+        Me.Lbl_RTimeShift.BackColor = System.Drawing.Color.Black
+        Me.Lbl_RTimeShift.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.Lbl_RTimeShift.Font = New System.Drawing.Font("Arial Black", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Lbl_RTimeShift.ForeColor = System.Drawing.Color.Lime
+        Me.Lbl_RTimeShift.Location = New System.Drawing.Point(6, 125)
+        Me.Lbl_RTimeShift.Name = "Lbl_RTimeShift"
+        Me.Lbl_RTimeShift.Size = New System.Drawing.Size(246, 61)
+        Me.Lbl_RTimeShift.TabIndex = 5
+        Me.Lbl_RTimeShift.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lbl_RNomEPG
+        '
+        Me.lbl_RNomEPG.BackColor = System.Drawing.Color.Black
+        Me.lbl_RNomEPG.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.lbl_RNomEPG.Font = New System.Drawing.Font("Arial Black", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl_RNomEPG.ForeColor = System.Drawing.Color.Lime
+        Me.lbl_RNomEPG.Location = New System.Drawing.Point(258, 64)
+        Me.lbl_RNomEPG.Name = "lbl_RNomEPG"
+        Me.lbl_RNomEPG.Size = New System.Drawing.Size(1008, 61)
+        Me.lbl_RNomEPG.TabIndex = 4
+        Me.lbl_RNomEPG.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lbl_RNoChaine
+        '
+        Me.lbl_RNoChaine.BackColor = System.Drawing.Color.Black
+        Me.lbl_RNoChaine.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.lbl_RNoChaine.Font = New System.Drawing.Font("Arial Black", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl_RNoChaine.ForeColor = System.Drawing.Color.Lime
+        Me.lbl_RNoChaine.Location = New System.Drawing.Point(6, 64)
+        Me.lbl_RNoChaine.Name = "lbl_RNoChaine"
+        Me.lbl_RNoChaine.Size = New System.Drawing.Size(246, 61)
+        Me.lbl_RNoChaine.TabIndex = 3
+        Me.lbl_RNoChaine.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lbl_RNoCanal
+        '
+        Me.lbl_RNoCanal.BackColor = System.Drawing.Color.Black
+        Me.lbl_RNoCanal.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.lbl_RNoCanal.Font = New System.Drawing.Font("Arial Black", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl_RNoCanal.ForeColor = System.Drawing.Color.Lime
+        Me.lbl_RNoCanal.Location = New System.Drawing.Point(6, 3)
+        Me.lbl_RNoCanal.Name = "lbl_RNoCanal"
+        Me.lbl_RNoCanal.Size = New System.Drawing.Size(246, 61)
+        Me.lbl_RNoCanal.TabIndex = 2
+        Me.lbl_RNoCanal.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lbl_RNomChaine
+        '
+        Me.lbl_RNomChaine.BackColor = System.Drawing.Color.Black
+        Me.lbl_RNomChaine.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.lbl_RNomChaine.Font = New System.Drawing.Font("Arial Black", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbl_RNomChaine.ForeColor = System.Drawing.Color.Lime
+        Me.lbl_RNomChaine.Location = New System.Drawing.Point(258, 3)
+        Me.lbl_RNomChaine.Name = "lbl_RNomChaine"
+        Me.lbl_RNomChaine.Size = New System.Drawing.Size(1008, 61)
+        Me.lbl_RNomChaine.TabIndex = 1
+        Me.lbl_RNomChaine.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'CheckBox_ShowLogs
+        '
+        Me.CheckBox_ShowLogs.AutoSize = True
+        Me.CheckBox_ShowLogs.Location = New System.Drawing.Point(1298, 128)
+        Me.CheckBox_ShowLogs.Name = "CheckBox_ShowLogs"
+        Me.CheckBox_ShowLogs.Size = New System.Drawing.Size(129, 24)
+        Me.CheckBox_ShowLogs.TabIndex = 8
+        Me.CheckBox_ShowLogs.Text = "Afficher Logs"
+        Me.CheckBox_ShowLogs.UseVisualStyleBackColor = True
         '
         'Form1
         '
@@ -1325,7 +1325,6 @@ Partial Class Form1
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D
         Me.MainMenuStrip = Me.MenuStrip1
         Me.Name = "Form1"
-        Me.Text = "Form1"
         Me.MenuStrip1.ResumeLayout(False)
         Me.MenuStrip1.PerformLayout()
         CType(Me.VlcControl1, System.ComponentModel.ISupportInitialize).EndInit()

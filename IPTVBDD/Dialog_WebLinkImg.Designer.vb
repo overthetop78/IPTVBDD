@@ -94,7 +94,6 @@ Partial Class Dialog_WebLinkImg
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.Btn_Cancel
         Me.ClientSize = New System.Drawing.Size(796, 858)
-        Me.ControlBox = False
         Me.Controls.Add(Me.ProgressBar_IMGLoad)
         Me.Controls.Add(Me.Btn_Accept)
         Me.Controls.Add(Me.Btn_Cancel)
@@ -104,9 +103,7 @@ Partial Class Dialog_WebLinkImg
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.MaximizeBox = False
-        Me.MinimizeBox = False
         Me.Name = "Dialog_WebLinkImg"
-        Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Ajout du logo"
         Me.TopMost = True
