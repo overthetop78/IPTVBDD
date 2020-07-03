@@ -153,6 +153,7 @@
   <ItemGroup>
     <Compile Include="AESCrypt.vb" />
     <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="Database.vb" />
     <Compile Include="Dialog_AskInfo.Designer.vb">
       <DependentUpon>Dialog_AskInfo.vb</DependentUpon>
     </Compile>
@@ -165,6 +166,7 @@
     <Compile Include="Dialog_WebLinkImg.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Export.vb" />
     <Compile Include="Form1.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -194,6 +196,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Scan.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Dialog_AskInfo.resx">

@@ -10,7 +10,7 @@ Public Class Dialog_AskInfo
         'Bouton modifier
         Me.DialogResult = System.Windows.Forms.DialogResult.OK
         'On va donc ajouter la ligne à la base de données en appelant la fonction RecData
-        Dim Result As Boolean = mod_var.RecData
+        Dim Result As Boolean = RecData()
         If Result = False Then
             Exit Sub
         Else
@@ -197,16 +197,4 @@ Public Class Dialog_AskInfo
         PictureBox_tvg_logo.Cursor = Cursors.Arrow
     End Sub
 
-    Private Sub Dialog_AskInfo_Activated(sender As Object, e As EventArgs) Handles Me.Activated
-        txt_NomChaine.Text = mod_var.NomChaine
-        txt_tvg_id.Text = mod_var.tvg_id
-        txt_tvg_chno.Text = mod_var.tvg_chno
-        txt_tvg_shift.Text = mod_var.tvg_shift
-        txt_group.Text = mod_var.group_channel
-        txt_categorie.Text = mod_var.Cat
-        txt_Desc.Text = mod_var.Desc
-        txt_Pays.Text = mod_var.Pays
-        If txt_NomChaine.Text = Nothing Or txt_NomChaine.Text = "" Then Button_Garder.Enabled = False
-        If mod_var.tvg_logo <> Nothing Then PictureBox_tvg_logo.ImageLocation = tvg_logo
-    End Sub
 End Class

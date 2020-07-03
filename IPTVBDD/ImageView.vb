@@ -2,15 +2,11 @@
 Imports System.Web.HttpUtility
 
 Public Class ImageView
-    Const LinkImg As String = "http://informaweb.freeboxos.fr/iptv/logos_tv/"
-    Public ImageCount As Integer, ImageListURL As New List(Of String), ImageListName As New List(Of String)
-    Public Shared NomChaineRech As String
 
     'Création de la Sub qui récuperera les données
     Public Sub ImgList(ImageCountSub As Integer, ImageListSub As List(Of String))
         If ImageCountSub > 0 Then
             ImageCount = ImageCountSub - 1
-
 
             'Traiter la liste avec deux nouvelles listes modifiant les lignes
             For i = 0 To ImageCount

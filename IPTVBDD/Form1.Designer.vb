@@ -29,7 +29,7 @@ Partial Class Form1
         Me.ExportStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ListeDeLectureM3UToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.FullToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.SéparéToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.OnlyActiveStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.OnlyNoActiveToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DiviserParToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem4 = New System.Windows.Forms.ToolStripMenuItem()
@@ -193,7 +193,7 @@ Partial Class Form1
         '
         'ListeDeLectureM3UToolStripMenuItem
         '
-        Me.ListeDeLectureM3UToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FullToolStripMenuItem, Me.SéparéToolStripMenuItem, Me.OnlyNoActiveToolStripMenuItem, Me.DiviserParToolStripMenuItem})
+        Me.ListeDeLectureM3UToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FullToolStripMenuItem, Me.OnlyActiveStripMenuItem, Me.OnlyNoActiveToolStripMenuItem, Me.DiviserParToolStripMenuItem})
         Me.ListeDeLectureM3UToolStripMenuItem.Name = "ListeDeLectureM3UToolStripMenuItem"
         Me.ListeDeLectureM3UToolStripMenuItem.Size = New System.Drawing.Size(256, 30)
         Me.ListeDeLectureM3UToolStripMenuItem.Text = "Liste de lecture M3U"
@@ -205,12 +205,12 @@ Partial Class Form1
         Me.FullToolStripMenuItem.Size = New System.Drawing.Size(256, 30)
         Me.FullToolStripMenuItem.Text = "Full"
         '
-        'SéparéToolStripMenuItem
+        'OnlyActiveStripMenuItem
         '
-        Me.SéparéToolStripMenuItem.Name = "SéparéToolStripMenuItem"
-        Me.SéparéToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F10
-        Me.SéparéToolStripMenuItem.Size = New System.Drawing.Size(256, 30)
-        Me.SéparéToolStripMenuItem.Text = "Only Active"
+        Me.OnlyActiveStripMenuItem.Name = "OnlyActiveStripMenuItem"
+        Me.OnlyActiveStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F10
+        Me.OnlyActiveStripMenuItem.Size = New System.Drawing.Size(256, 30)
+        Me.OnlyActiveStripMenuItem.Text = "Only Active"
         '
         'OnlyNoActiveToolStripMenuItem
         '
@@ -273,28 +273,28 @@ Partial Class Form1
         '
         Me.FullScanToolStripMenuItem.Name = "FullScanToolStripMenuItem"
         Me.FullScanToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5
-        Me.FullScanToolStripMenuItem.Size = New System.Drawing.Size(252, 30)
+        Me.FullScanToolStripMenuItem.Size = New System.Drawing.Size(246, 30)
         Me.FullScanToolStripMenuItem.Text = "Full Scan"
         '
         'ListeScanToolStripMenuItem
         '
         Me.ListeScanToolStripMenuItem.Name = "ListeScanToolStripMenuItem"
         Me.ListeScanToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F6
-        Me.ListeScanToolStripMenuItem.Size = New System.Drawing.Size(252, 30)
+        Me.ListeScanToolStripMenuItem.Size = New System.Drawing.Size(246, 30)
         Me.ListeScanToolStripMenuItem.Text = "Liste Scan"
         '
         'ActiveScanToolStripMenuItem
         '
         Me.ActiveScanToolStripMenuItem.Name = "ActiveScanToolStripMenuItem"
         Me.ActiveScanToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F7
-        Me.ActiveScanToolStripMenuItem.Size = New System.Drawing.Size(252, 30)
+        Me.ActiveScanToolStripMenuItem.Size = New System.Drawing.Size(246, 30)
         Me.ActiveScanToolStripMenuItem.Text = "Active Scan"
         '
         'NoActiveScanToolStripMenuItem
         '
         Me.NoActiveScanToolStripMenuItem.Name = "NoActiveScanToolStripMenuItem"
         Me.NoActiveScanToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F8
-        Me.NoActiveScanToolStripMenuItem.Size = New System.Drawing.Size(252, 30)
+        Me.NoActiveScanToolStripMenuItem.Size = New System.Drawing.Size(246, 30)
         Me.NoActiveScanToolStripMenuItem.Text = "No Active Scan"
         '
         'OpenFileDialog1
@@ -1324,6 +1324,7 @@ Partial Class Form1
         Me.Controls.Add(Me.MenuStrip1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D
         Me.MainMenuStrip = Me.MenuStrip1
+        Me.MaximizeBox = False
         Me.Name = "Form1"
         Me.MenuStrip1.ResumeLayout(False)
         Me.MenuStrip1.PerformLayout()
@@ -1364,7 +1365,7 @@ Partial Class Form1
     Friend WithEvents ExportStripMenuItem As ToolStripMenuItem
     Friend WithEvents ListeDeLectureM3UToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents FullToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents SéparéToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents OnlyActiveStripMenuItem As ToolStripMenuItem
     Friend WithEvents OnlyNoActiveToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents DiviserParToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem4 As ToolStripMenuItem

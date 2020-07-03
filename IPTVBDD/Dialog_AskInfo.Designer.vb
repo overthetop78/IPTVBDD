@@ -47,35 +47,35 @@ Partial Class Dialog_AskInfo
         '
         'OK_Button
         '
-        Me.OK_Button.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.OK_Button.Location = New System.Drawing.Point(1116, 1133)
+        Me.OK_Button.Location = New System.Drawing.Point(844, 700)
         Me.OK_Button.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.OK_Button.Name = "OK_Button"
         Me.OK_Button.Size = New System.Drawing.Size(100, 35)
         Me.OK_Button.TabIndex = 0
         Me.OK_Button.Text = "Modifier"
+        Me.OK_Button.UseVisualStyleBackColor = True
         '
         'Cancel_Button
         '
-        Me.Cancel_Button.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.Cancel_Button.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.Cancel_Button.Location = New System.Drawing.Point(856, 1133)
+        Me.Cancel_Button.Location = New System.Drawing.Point(584, 700)
         Me.Cancel_Button.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.Cancel_Button.Name = "Cancel_Button"
         Me.Cancel_Button.Size = New System.Drawing.Size(100, 35)
         Me.Cancel_Button.TabIndex = 1
         Me.Cancel_Button.Text = "Passer"
+        Me.Cancel_Button.UseVisualStyleBackColor = True
         '
         'Button_Garder
         '
-        Me.Button_Garder.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.Button_Garder.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.Button_Garder.Location = New System.Drawing.Point(984, 1133)
+        Me.Button_Garder.Location = New System.Drawing.Point(712, 700)
         Me.Button_Garder.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.Button_Garder.Name = "Button_Garder"
         Me.Button_Garder.Size = New System.Drawing.Size(100, 35)
         Me.Button_Garder.TabIndex = 6
         Me.Button_Garder.Text = "Garder"
+        Me.Button_Garder.UseVisualStyleBackColor = True
         '
         'lbl_NomChaine
         '
@@ -251,7 +251,7 @@ Partial Class Dialog_AskInfo
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.Control
         Me.CancelButton = Me.Cancel_Button
-        Me.ClientSize = New System.Drawing.Size(1240, 1182)
+        Me.ClientSize = New System.Drawing.Size(1043, 818)
         Me.Controls.Add(Me.PictureBox_tvg_logo)
         Me.Controls.Add(Me.txt_Pays)
         Me.Controls.Add(Me.lbl_Pays)
