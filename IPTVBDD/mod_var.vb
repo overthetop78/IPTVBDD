@@ -29,7 +29,6 @@ Module mod_var
     Public SQLConnexion As SqliteConnection, SQLCommand As SqliteCommand
     Public TestLink As String = Nothing
     Public IMGH As Integer, IMGHR As Integer, IMGV As Integer, IMGVR As Integer, IMGPixel As Imaging.PixelFormat, IMGPalette As Imaging.ColorPalette, IMGRawFormat As Imaging.ImageFormat
-    Public cmd As SshCommand, DossierLogos As String = "/var/www/html/iptv/logos_tv/", LinkLogos As String = "http://informaweb.freeboxos.free/iptv/logos_tv/"
     Public RNoCanal As Integer = 0, RNomChaine As String = Nothing, RNomEPG As String = Nothing, RNoChaine As String = Nothing, RGroupChaine As String = Nothing, RLinkLogo As String = Nothing, RTimeshift As String = Nothing,
             RDescription As String = Nothing, RCatChaine As String = Nothing, RPays As String = Nothing, RVideoID As Integer = 0, RVideoName As String = Nothing, RVideoCodec As String = Nothing, RVideoV As Integer = 0,
             RVideoH As Integer, RVideoFPS As Single, RVideoOriginalCodec As String = Nothing, RAudioID1 As Integer, RAudioName1 As String = Nothing, RAudioCodec1 As String = Nothing, RAudioLang1 As String = Nothing,
@@ -37,9 +36,9 @@ Module mod_var
             RAudioChannel2 As Integer = 0, RAudioRate2 As Integer = 0, RAudioOriginalCodec2 As String = Nothing, RSubID1 As Integer = 0, RSubName1 As String = Nothing, RSubCodec1 As String = Nothing, RSubLang1 As String = Nothing,
             RSubDesc1 As String = Nothing, RSubOriginalCodec1 As String = Nothing, RSubID2 As Integer = 0, RSubName2 As String = Nothing, RSubCodec2 As String = Nothing, RSubLang2 As String = Nothing,
             RSubDesc2 As String = Nothing, RSubOriginalCodec2 As String = Nothing
-    Public Const LinkImg As String = "http://informaweb.freeboxos.fr/iptv/logos_tv/"
-    Public ImageCount As Integer, ImageListURL As New List(Of String), ImageListName As New List(Of String)
-    Public NomChaineRech As String
+    Public Const LinkImg As String = "http://informaweb.freeboxos.fr/iptv/logos_tv/", DossierLogos As String = "/var/www/html/iptv/logos_tv/"
+    Public cmd As SshCommand, ImageCount As Integer, ImageListURL As New List(Of String), ImageListName As New List(Of String)
+    Public NomChaineRech As String, NomIMG As String = Nothing
 
     Public Sub LectureFichierM3U(ByVal AllFullAddress As String)
         ' Maintenant qu'on a toutes les infos sur le stream en cours, on va chercher dans le fichier principal si il y a une correspondance.

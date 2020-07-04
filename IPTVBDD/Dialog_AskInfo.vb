@@ -163,18 +163,20 @@ Public Class Dialog_AskInfo
             Do While Not Strm.EndOfStream
                 ' pour s = le/s mot/s a tester de Split
                 For Each s As String In Split
-                    If s <> "TV" And s.Length > 1 And Ligne.IndexOf(s, 0, Ligne.Length, StringComparison.CurrentCultureIgnoreCase) <> -1 And t = 0 Then
-                        Ligne2 = Ligne
-                        If Split.Count > 1 Then t = Split.Count Else t = 0
-                    End If
-                    If s.Length > 0 And Ligne.IndexOf(s, 0, Ligne.Length, StringComparison.CurrentCultureIgnoreCase) <> -1 And t > 1 Then
-                        Ligne2 = Ligne
-                    End If
-                    If Split.Last = s And Ligne2 <> Nothing Then
-                        Resultat.Add(Ligne2)
-                        'MsgBox("trouvé: " & Ligne2, vbApplicationModal + vbOKOnly, "Find")
-                        Ligne2 = Nothing
-                        t = 0
+                    'Si le mot est trouvé dans la ligne
+                    If Ligne.IndexOf(s, 0, Ligne.Length, StringComparison.CurrentCultureIgnoreCase) <> -1 Then
+                        'Si Split a plus d'un mot
+                        If Split.Count > 1 Then
+                            'Si la longueur est plus grande que 2
+                            If s.Length > 2 Then
+                                'On ajoute la ligne
+                                Resultat.Add(Ligne)
+                                'Sinon si longueur plus petit que 2
+                            End If
+                            'Si Split = 1 mot seulement
+                        ElseIf Split.Count = 1 Then
+                            Resultat.Add(Ligne)
+                        End If
                     End If
                 Next
                 PageWeb.Add(Ligne)
@@ -197,4 +199,35 @@ Public Class Dialog_AskInfo
         PictureBox_tvg_logo.Cursor = Cursors.Arrow
     End Sub
 
+    Private Sub txt_Desc_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles txt_Desc.MouseDoubleClick
+        txt_Desc.Clear()
+    End Sub
+
+    Private Sub txt_Pays_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles txt_Pays.MouseDoubleClick
+        txt_Pays.Clear()
+    End Sub
+
+    Private Sub txt_categorie_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles txt_categorie.MouseDoubleClick
+        txt_categorie.Clear()
+    End Sub
+
+    Private Sub txt_group_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles txt_group.MouseDoubleClick
+        txt_group.Clear()
+    End Sub
+
+    Private Sub txt_tvg_id_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles txt_tvg_id.MouseDoubleClick
+        txt_tvg_id.Clear()
+    End Sub
+
+    Private Sub txt_tvg_shift_TextChanged(sender As Object, e As EventArgs) Handles txt_tvg_shift.TextChanged
+        txt_tvg_shift.Clear()
+    End Sub
+
+    Private Sub txt_tvg_chno_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles txt_tvg_chno.MouseDoubleClick
+        txt_tvg_chno.Clear()
+    End Sub
+
+    Private Sub txt_NomChaine_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles txt_NomChaine.MouseDoubleClick
+        txt_NomChaine.Clear()
+    End Sub
 End Class

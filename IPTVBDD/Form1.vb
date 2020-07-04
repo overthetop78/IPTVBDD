@@ -68,26 +68,36 @@ Public Class Form1
             Select Case Question
                 Case 1
                     NomChaine = HtmlDecode(OldAnswer)
+                    Dialog_AskInfo.txt_NomChaine.Text = NomChaine
                 Case 2
                     tvg_id = HtmlDecode(OldAnswer)
+                    Dialog_AskInfo.txt_tvg_id.Text = tvg_id
                 Case 3
                     tvg_chno = OldAnswer
+                    Dialog_AskInfo.txt_tvg_chno.Text = tvg_chno
                 Case 4
-                    group_channel = HtmlDecode(OldAnswer)
+                    group_title = HtmlDecode(OldAnswer)
+                    Dialog_AskInfo.txt_group.Text = group_title
                 Case 5
                     tvg_shift = OldAnswer
+                    Dialog_AskInfo.txt_tvg_shift.Text = tvg_shift
                 Case 6
                     tvg_logo = OldAnswer
                     If OldAnswer = Nothing Or OldAnswer = "" Then
                         Dialog_AskInfo.PictureBox_tvg_logo.Image = Nothing
                         Dialog_AskInfo.PictureBox_tvg_logo.BackgroundImage = Nothing
+                    Else
+                        Dialog_AskInfo.PictureBox_tvg_logo.ImageLocation = tvg_logo
                     End If
                 Case 7
                     Pays = HtmlDecode(OldAnswer)
+                    Dialog_AskInfo.txt_Pays.Text = Pays
                 Case 8
                     Desc = HtmlDecode(OldAnswer)
+                    Dialog_AskInfo.txt_Desc.Text = Desc
                 Case 9
                     Cat = HtmlDecode(OldAnswer)
+                    Dialog_AskInfo.txt_categorie.Text = Cat
                 Case Else
                     Exit Select
             End Select
@@ -205,7 +215,7 @@ SubtitleTrackID2, SubtitleTrackName2, SubtitleCodec2, SubtitleLang2, SubtitleDes
         StatutBar_InfoBGW.ToolTipText = "Aucun fichier chargé"
         NumericUpDown1.ReadOnly = False
 
-        If File.Exists(FileWebLogo) = False Or File.GetCreationTime(FileWebLogo) < DateTime.Today Or File.GetLastWriteTime(FileWebLogo) < DateTime.Today Then
+        If File.Exists(FileWebLogo) = False Or File.GetLastWriteTime(FileWebLogo) < Date.Today Then
             Dim Web As New HtmlAgilityPack.HtmlWeb, url As String = "http://informaweb.freeboxos.fr/iptv/logos_tv/"
             Dim PageWeb = Web.Load(url)
             PageWeb.Save(FileWebLogo)

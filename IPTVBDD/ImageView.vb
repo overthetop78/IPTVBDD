@@ -72,6 +72,10 @@ Public Class ImageView
         If Confirm = MsgBoxResult.No Then
             Exit Sub
         Else
+            NomChaineRech = Dialog_AskInfo.txt_NomChaine.Text
+            HtmlEncode(NomChaineRech)
+            NomChaineRech = Replace(NomChaineRech, Chr(32), "%20")
+            Process.Start("https://www.google.fr/search?hl=fr&tbm=isch&source=hp&q=logo%20" & NomChaineRech)
             Dialog_WebLinkImg.ShowDialog()
         End If
 
@@ -80,20 +84,17 @@ Public Class ImageView
     Private Sub OK_Button_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OK_Button.Click
         Me.DialogResult = System.Windows.Forms.DialogResult.OK
         'Copie du lien de l'image vers tvg_logo
-        mod_var.tvg_logo = PictureView.ImageLocation
+        tvg_logo = PictureView.ImageLocation
         Dialog_AskInfo.PictureBox_tvg_logo.ImageLocation = PictureView.ImageLocation
         ImageListName.Clear()
         ImageListURL.Clear()
-
         Me.Close()
     End Sub
 
     Private Sub Cancel_Button_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Cancel_Button.Click
         Me.DialogResult = System.Windows.Forms.DialogResult.Cancel
-
         ImageListName.Clear()
         ImageListURL.Clear()
-
         Me.Close()
     End Sub
 
