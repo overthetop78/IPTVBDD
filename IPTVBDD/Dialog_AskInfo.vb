@@ -8,13 +8,12 @@ Public Class Dialog_AskInfo
 
     Private Sub OK_Button_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OK_Button.Click
         'Bouton modifier
-        Me.DialogResult = System.Windows.Forms.DialogResult.OK
+        'Me.DialogResult = System.Windows.Forms.DialogResult.OK
         'On va donc ajouter la ligne à la base de données en appelant la fonction RecData
         Dim Result As Boolean = RecData()
         If Result = False Then
             Exit Sub
         Else
-
             Me.Close()
         End If
 
@@ -32,13 +31,6 @@ Public Class Dialog_AskInfo
 
         Me.Close()
     End Sub
-
-    Private Sub Dialog_AskInfo_Load(sender As Object, e As EventArgs)
-
-
-    End Sub
-
-
 
     Private Sub txt_tvg_chno_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txt_tvg_chno.KeyPress
         If Not Char.IsLetterOrDigit(e.KeyChar) Or Not Char.IsPunctuation(e.KeyChar) Or Not Char.IsSeparator(e.KeyChar) Or Not Char.IsSymbol(e.KeyChar) Then
@@ -122,10 +114,6 @@ Public Class Dialog_AskInfo
         End If
     End Sub
 
-    Private Sub Dialog_AskInfo_Shown(sender As Object, e As EventArgs) Handles Me.Shown
-
-    End Sub
-
 
 
     Private Sub PictureBox_tvg_logo_DoubleClick(sender As Object, e As EventArgs) Handles PictureBox_tvg_logo.DoubleClick
@@ -169,12 +157,15 @@ Public Class Dialog_AskInfo
                         If Split.Count > 1 Then
                             'Si la longueur est plus grande que 2
                             If s.Length > 2 Then
-                                'On ajoute la ligne
-                                Resultat.Add(Ligne)
+                                'si la ligne n'est pas déjà dans le fichier pour eviter d'avoir des doublons ou si resultat ne contient rien
+                                If Resultat.Count < 1 Or Resultat.IndexOf(Ligne) = -1 Then
+                                    'On ajoute la ligne
+                                    Resultat.Add(Ligne)
+                                End If
                                 'Sinon si longueur plus petit que 2
                             End If
-                            'Si Split = 1 mot seulement
-                        ElseIf Split.Count = 1 Then
+                                'Si Split = 1 mot seulement
+                            ElseIf Split.Count = 1 Then
                             Resultat.Add(Ligne)
                         End If
                     End If
@@ -185,7 +176,10 @@ Public Class Dialog_AskInfo
 
             'On envoie les données
             ImageView.ImgList(Resultat.Count, Resultat)
-
+            Resultat.Clear()
+            Strm.Close()
+            Ligne = Nothing
+            PageWeb.Clear()
 
         Catch ex As Exception
             MsgBox("Erreur: " & ex.Message, vbApplicationModal + vbOKOnly, "Erreur")
@@ -230,4 +224,5 @@ Public Class Dialog_AskInfo
     Private Sub txt_NomChaine_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles txt_NomChaine.MouseDoubleClick
         txt_NomChaine.Clear()
     End Sub
+
 End Class

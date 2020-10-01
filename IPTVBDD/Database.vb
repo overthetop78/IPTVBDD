@@ -49,29 +49,19 @@ Module Database
                         Dim cmd As String = $"SELECT * FROM InfoIPTV WHERE AdresseHTTP='{AdresseHTTP}';"
                         SQLCommand.CommandText = cmd
                         TestLigneDB = SQLCommand.ExecuteScalar
-
                         If TestLigneDB = False Then
                             'creation de la ligne
                             SQLCommand = SQLConnexion.CreateCommand()
                             cmd = $"INSERT INTO InfoIPTV (HTTPVer,AdresseHTTP,HTTPPort,Pseudo,Pass) VALUES ('{HTTPVer}','{AdresseHTTP}','{HTTPPort}','{Pseudo}','{Pass}');"
                             SQLCommand.CommandText = cmd
                             SQLCommand.ExecuteNonQuery()
-                            'creation de la table . Il faut : le numéro du canal (du http), le Nom de la chaine, le nom EPG de la chaine, Le numéro de la chaine, le groupe de la chaine, le lien vers le logo de la chaine, le timeshift, 
-                            ' description de la chaine, Type de chaines (Sports, Generalistes, Musicales, Radio, Cinema, Divertissements, Jeunesse, Decouvertes, Locales, Infos,etc..), Pays, 
+                            'creation de la table . Il faut : le numéro du canal (du http), le Nom de la chaine, 
                             ' Type video (AVC, HEVC, MPEG2), résolution video (1920*1080), définition video (1080P, 720P, 540P), FPS,  Nombre de langage, Langue 1 (Fra), Langue 1 Type (AAC, Dolby Digital), Langue 2 (Eng) Langue 2 Type (AAC, Dolby Digital)
                             ' Nombre de Sous-titre, Sous-titre 1 (Fra), Sous-Titre 2 (Eng) 
                             SQLCommand = SQLConnexion.CreateCommand()
                             cmd = $"CREATE TABLE '{Adresse}' (
     NoCanal INT NOT NULL PRIMARY KEY,
     NomChaine VARCHAR(100) NOT NULL,
-    NomEPG VARCHAR(100),
-    NoChaine VARCHAR(10),
-    GroupeChaine VARCHAR(100),
-    LinkLogo VARCHAR(255),
-    Timeshift VARCHAR(10),
-    Description TEXT,
-    CatChaine VARCHAR(100),
-    Pays VARCHAR(100),
     VideoID INT,
     VideoName VARCHAR(50),
     VideoCodec VARCHAR(10),
@@ -106,9 +96,7 @@ Module Database
     SubDesc2 TEXT,
     SubOriginalCodec2 VARCHAR(10)
     );"
-
                             SQLCommand.CommandText = cmd
-
                             SQLCommand.ExecuteNonQuery()
                         End If
                         SQLConnexion.Close()
@@ -145,7 +133,7 @@ Module Database
         Catch ex As Exception
             MsgBox("L'erreur suivante a été rencontrée:" & ex.Message)
         End Try
-
+        CreateChannelListDB(DBConnect)
         CreationDB = True
         Return CreationDB
     End Function
@@ -269,22 +257,45 @@ Module Database
         If SubProfile2 = Nothing Then SubProfile2 = 0
         If SubTrackID2 = Nothing Then SubTrackID2 = 0
 
-
-        'Inscription dans la base de données
+        'Recherche dans la table ChannelList si la chaine existe déjà.
 
         Dim SQLConnexion As SqliteConnection = New SqliteConnection(DBConnect), SQLCommand As SqliteCommand
         SQLConnexion.Open()
-        'recherche si le NoCanal existe déjà 
         SQLCommand = SQLConnexion.CreateCommand()
-        Dim cmd As String = $"SELECT * FROM {Adresse} WHERE NoCanal={NoCanal};"
+        Dim cmd As String = $"SELECT * FROM ChannelList WHERE NomChaine='{NomChaine}';"
         SQLCommand.CommandText = cmd
-        Dim Result As SqliteDataReader = SQLCommand.ExecuteReader(), ResultID As String = Nothing
+        Dim Result As SqliteDataReader = SQLCommand.ExecuteReader(), ResultID As String = Nothing, ResultName As String = Nothing
+        While Result.Read
+            ResultName = Result.GetString(1)
+        End While
+        'Inscription dans la base de données
+        If ResultName = NomChaine Then
+            SQLCommand = SQLConnexion.CreateCommand()
+            cmd = $"UPDATE ChannelList SET NomEPG='{tvg_id}',NoChaine='{tvg_chno}',GroupeChaine='{group_channel}',LinkLogo='{tvg_logo}',Timeshift='{tvg_shift}',Description='{Desc}',CatChaine='{Cat}',Pays='{Pays}' WHERE NomChaine='{NomChaine}';"
+            SQLCommand.CommandText = cmd
+            SQLCommand.ExecuteNonQuery()
+            Result.Close()
+        Else
+            SQLCommand = SQLConnexion.CreateCommand()
+            cmd = $"INSERT INTO ChannelList(NomChaine,NomEPG,NoChaine,GroupeChaine,LinkLogo,Timeshift,Description,CatChaine,Pays) VALUES ('{NomChaine}','{tvg_id}','{tvg_chno}','{group_channel}','{tvg_logo}','{tvg_shift}','{Desc}','{Cat}','{Pays}');"
+            SQLCommand.CommandText = cmd
+            SQLCommand.ExecuteNonQuery()
+            Result.Close()
+        End If
+        SQLConnexion.Close()
+        'recherche si le NoCanal existe déjà 
+        SQLConnexion.Open()
+        SQLCommand = SQLConnexion.CreateCommand()
+        cmd = $"SELECT * FROM {Adresse} WHERE NoCanal={NoCanal};"
+        SQLCommand.CommandText = cmd
+        Result = SQLCommand.ExecuteReader()
         While Result.Read
             ResultID = Result.GetString(0)
         End While
+        'Inscription dans la base de données
         If ResultID = CStr(NoCanal) Then
             SQLCommand = SQLConnexion.CreateCommand()
-            cmd = $"UPDATE '{Adresse}' SET NomChaine='{NomChaine}',NomEPG='{tvg_id}',NoChaine='{tvg_chno}',GroupeChaine='{group_channel}',LinkLogo='{tvg_logo}',Timeshift='{tvg_shift}',Description='{Desc}',CatChaine='{Cat}',Pays='{Pays}',
+            cmd = $"UPDATE '{Adresse}' SET NomChaine='{NomChaine}',
 VideoID='{VideoTrackID}',VideoName='{VideoTrackName}',VideoCodec='{VideoCodec}',VideoV='{VideoV}',VideoH='{VideoH}',VideoFPS='{VideoFPS}',VideoOriginalCodec='{VideoOriginalCodec}',
 AudioID1='{AudioTrackID1}',AudioName1='{AudioTrackName1}',AudioCodec1='{AudioCodec1}',AudioLang1='{AudioLang1}',AudioChannel1='{AudioChannel1}',AudioRate1='{AudioRate1}',AudioOriginalCodec1='{AudioOriginalCodec1}',
 AudioID2='{AudioTrackID2}',AudioName2='{AudioTrackName2}',AudioCodec2='{AudioCodec2}',AudioLang2='{AudioLang2}',AudioChannel2='{AudioChannel2}',AudioRate2='{AudioRate2}',AudioOriginalCodec2='{AudioOriginalCodec2}',
@@ -299,9 +310,9 @@ SubID2='{SubTrackID2}',SubName2='{SubTrackName2}',SubCodec2='{SubCodec2}',SubLan
 
             SQLCommand = SQLConnexion.CreateCommand()
             cmd = $"INSERT INTO '{Adresse}' (
-NoCanal,NomChaine,NomEPG,NoChaine,GroupeChaine,LinkLogo,Timeshift,Description,CatChaine,Pays,VideoID,VideoName,VideoCodec,VideoV,VideoH,VideoFPS,VideoOriginalCodec,
+NoCanal,NomChaine,VideoID,VideoName,VideoCodec,VideoV,VideoH,VideoFPS,VideoOriginalCodec,
 AudioID1,AudioName1,AudioCodec1,AudioLang1,AudioChannel1,AudioRate1,AudioOriginalCodec1,AudioID2,AudioName2,AudioCodec2,AudioLang2,AudioChannel2,AudioRate2,AudioOriginalCodec2,
-SubID1,SubName1,SubCodec1,SubLang1,SubDesc1,SubOriginalCodec1,SubID2,SubName2,SubCodec2,SubLang2,SubDesc2,SubOriginalCodec2) VALUES ('{NoCanal}','{NomChaine}','{tvg_id}','{tvg_chno}','{group_channel}','{tvg_logo}','{tvg_shift}','{Desc}','{Cat}','{Pays}',
+SubID1,SubName1,SubCodec1,SubLang1,SubDesc1,SubOriginalCodec1,SubID2,SubName2,SubCodec2,SubLang2,SubDesc2,SubOriginalCodec2) VALUES ('{NoCanal}','{NomChaine}',
 '{VideoTrackID}','{VideoTrackName}','{VideoCodec}','{VideoV}','{VideoH}','{VideoFPS}','{VideoOriginalCodec}',
 '{AudioTrackID1}','{AudioTrackName1}','{AudioCodec1}','{AudioLang1}','{AudioChannel1}','{AudioRate1}','{AudioOriginalCodec1}',
 '{AudioTrackID2}','{AudioTrackName2}','{AudioCodec2}','{AudioLang2}','{AudioChannel2}','{AudioRate2}','{AudioOriginalCodec2}',
@@ -329,11 +340,12 @@ SubID1,SubName1,SubCodec1,SubLang1,SubDesc1,SubOriginalCodec1,SubID2,SubName2,Su
         SQLConnexion.Close()
     End Function
 
-    Public Sub LectureBDD(ByVal i As Integer)
+    Public Sub LectureBDD(ByVal i As Integer, NoCanalReq As Integer, NomChaineReq As String)
         'Maintenant qu'on a toutes les infos dans des variables on peut rechercher une correspondance dans la base de données
         'on efface les variables (On mettra tout dans un tableau, ce sera plus simple)
-        RNoCanal = Nothing
+        RNoCanal = Nothing 'celui là est inutile // En fait, il peut être utile au cas de recherche par nom de chaine
         RNomChaine = Nothing
+        RNomChaine2 = Nothing
         RNomEPG = Nothing
         RNoChaine = Nothing
         RGroupChaine = Nothing
@@ -375,16 +387,66 @@ SubID1,SubName1,SubCodec1,SubLang1,SubDesc1,SubOriginalCodec1,SubID2,SubName2,Su
         RSubLang2 = Nothing
         RSubDesc2 = Nothing
         RSubOriginalCodec2 = Nothing
-        'On recherche dans la table AdresseHTTP si une des variable existe 
+
+        'On recherche en premier le NoCanal pour savoir s'il existe déjà 
         Dim SQLConnexion As SqliteConnection = New SqliteConnection(DBConnect)
         SQLConnexion.Open()
-        SQLCommand = SQLConnexion.CreateCommand()
-        'recherche dans la base de données AdresseHTTP la ligne ou ID est egal a l'ID qui represente le canal IPTV
-        SQLCommand.CommandText = $"SELECT * FROM '{Adresse}' WHERE NoCanal ={i};"
+        SQLCommand = SQLConnexion.CreateCommand
+        'Recherche dans la table 
+        SQLCommand.CommandText = $"SELECT * FROM {Adresse} WHERE NoCanal='{NoCanalReq}';"
         Dim ResultReq As SqliteDataReader = SQLCommand.ExecuteReader()
         Try
             Do While ResultReq.Read
                 RNoCanal = ResultReq(0)
+                RNomChaine2 = ResultReq(1)
+                RVideoID = ResultReq(2)
+                RVideoName = ResultReq(3)
+                RVideoCodec = ResultReq(4)
+                RVideoV = ResultReq(5)
+                RVideoH = ResultReq(6)
+                RVideoFPS = ResultReq(7)
+                RVideoOriginalCodec = ResultReq(8)
+                RAudioID1 = ResultReq(9)
+                RAudioName1 = ResultReq(10)
+                RAudioCodec1 = ResultReq(11)
+                RAudioLang1 = ResultReq(12)
+                RAudioChannel1 = ResultReq(13)
+                RAudioRate1 = ResultReq(14)
+                RAudioOriginalCodec1 = ResultReq(15)
+                RAudioID2 = ResultReq(16)
+                RAudioName2 = ResultReq(17)
+                RAudioCodec2 = ResultReq(18)
+                RAudioLang2 = ResultReq(19)
+                RAudioChannel2 = ResultReq(20)
+                RAudioRate2 = ResultReq(21)
+                RAudioOriginalCodec2 = ResultReq(22)
+                RSubID1 = ResultReq(23)
+                RSubName1 = ResultReq(24)
+                RSubCodec1 = ResultReq(25)
+                RSubLang1 = ResultReq(26)
+                RSubDesc1 = ResultReq(27)
+                RSubOriginalCodec1 = ResultReq(28)
+                RSubID2 = ResultReq(29)
+                RSubName2 = ResultReq(30)
+                RSubCodec2 = ResultReq(31)
+                RSubLang2 = ResultReq(32)
+                RSubDesc2 = ResultReq(33)
+                RSubOriginalCodec2 = ResultReq(34)
+            Loop
+        Catch ex As Exception
+            Dim ErreurReq As String = ex.Message + vbCrLf + ex.HelpLink & vbCrLf & CStr(ex.HResult) & vbCrLf & ex.Source & vbCrLf & ex.StackTrace
+            MsgBox(ErreurReq, vbApplicationModal)
+        End Try
+        ' Si il y a un resultat, mais qu'il est différent de NomChaineReq alors on prendra ce NomChaine pour la recherche, sinon on garde le NomChaineReq
+        If RNomChaine2 <> Nothing And RNomChaine2 <> NomChaineReq Then RNomChaine = RNomChaine2 Else RNomChaine = NomChaineReq
+        ResultReq.Close()
+
+        SQLCommand = SQLConnexion.CreateCommand
+        'Recherche dans la table ChannelList la ligne ou RNomChaine est égal à NomChaine qui represente la chaine
+        SQLCommand.CommandText = $"SELECT * FROM ChannelList WHERE NomChaine='{RNomChaine}';"
+        ResultReq = SQLCommand.ExecuteReader()
+        Try
+            Do While ResultReq.Read
                 RNomChaine = ResultReq(1)
                 RNomEPG = ResultReq(2)
                 RNoChaine = ResultReq(3)
@@ -394,41 +456,7 @@ SubID1,SubName1,SubCodec1,SubLang1,SubDesc1,SubOriginalCodec1,SubID2,SubName2,Su
                 RDescription = ResultReq(7)
                 RCatChaine = ResultReq(8)
                 RPays = ResultReq(9)
-                RVideoID = ResultReq(10)
-                RVideoName = ResultReq(11)
-                RVideoCodec = ResultReq(12)
-                RVideoV = ResultReq(13)
-                RVideoH = ResultReq(14)
-                RVideoFPS = ResultReq(15)
-                RVideoOriginalCodec = ResultReq(16)
-                RAudioID1 = ResultReq(17)
-                RAudioName1 = ResultReq(18)
-                RAudioCodec1 = ResultReq(19)
-                RAudioLang1 = ResultReq(20)
-                RAudioChannel1 = ResultReq(21)
-                RAudioRate1 = ResultReq(22)
-                RAudioOriginalCodec1 = ResultReq(23)
-                RAudioID2 = ResultReq(24)
-                RAudioName2 = ResultReq(25)
-                RAudioCodec2 = ResultReq(26)
-                RAudioLang2 = ResultReq(27)
-                RAudioChannel2 = ResultReq(28)
-                RAudioRate2 = ResultReq(29)
-                RAudioOriginalCodec2 = ResultReq(30)
-                RSubID1 = ResultReq(31)
-                RSubName1 = ResultReq(32)
-                RSubCodec1 = ResultReq(33)
-                RSubLang1 = ResultReq(34)
-                RSubDesc1 = ResultReq(35)
-                RSubOriginalCodec1 = ResultReq(36)
-                RSubID2 = ResultReq(37)
-                RSubName2 = ResultReq(38)
-                RSubCodec2 = ResultReq(39)
-                RSubLang2 = ResultReq(40)
-                RSubDesc2 = ResultReq(41)
-                RSubOriginalCodec2 = ResultReq(42)
             Loop
-
             'Si on a une entrée , on va chercher
             If ResultReq.HasRows <> False Then
                 'On met a jour 
@@ -442,11 +470,45 @@ SubID1,SubName1,SubCodec1,SubLang1,SubDesc1,SubOriginalCodec1,SubID2,SubName2,Su
                 Cat = RCatChaine
                 Pays = RPays
             End If
+            ResultReq.Close()
+            SQLConnexion.Close()
         Catch ex As Exception
-            Dim Erreur As String = ex.Message + vbCrLf + ex.HelpLink & vbCrLf & CStr(ex.HResult) & vbCrLf & ex.Source & vbCrLf & ex.StackTrace
-            MsgBox(Erreur, vbApplicationModal)
+            Dim ErreurReq As String = ex.Message + vbCrLf + ex.HelpLink & vbCrLf & CStr(ex.HResult) & vbCrLf & ex.Source & vbCrLf & ex.StackTrace
+            MsgBox(ErreurReq, vbApplicationModal)
         End Try
-        ResultReq.Close()
-        SQLConnexion.Close()
+
     End Sub
+
+
+    'au lieu de faire une table qui contient toutes les infos je devrais faire deux tables 
+    ' la premiere table contiendra le nom de la chaine , son id epg, sa description, son pays , sa catégorie etc..
+    'la deuxieme sera celle qui contiendra juste le nom de la chaine suivant son num de canal et les infos audio video et soustitres de la chaine. 
+    'Comme ca, inutile de devoir retaper les infos pour une chaine déjà dans la base, on reprendra les données existantes 
+    Public Function CreateChannelListDB(DBConnect)
+        Try
+            Dim SQLConnexion As SqliteConnection = New SqliteConnection(DBConnect)
+            SQLConnexion.Open()
+            SQLCommand = SQLConnexion.CreateCommand()
+            Dim cmd As String = "
+                    CREATE TABLE ChannelList (
+                        id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+                        NomChaine VARCHAR(100) NOT NULL,
+                        NomEPG VARCHAR(100),
+                        NoChaine VARCHAR(10),
+                        GroupeChaine VARCHAR(100),
+                        LinkLogo VARCHAR(255),
+                        Timeshift VARCHAR(10),
+                        Description TEXT,
+                        CatChaine VARCHAR(100),
+                        Pays VARCHAR(100));"
+            SQLCommand.CommandText = cmd
+            SQLCommand.ExecuteNonQuery()
+            SQLConnexion.Close()
+        Catch ex As Exception
+            MsgBox("L'erreur suivante a été rencontrée:" & ex.Message)
+        End Try
+
+        CreateChannelListDB = True
+        Return CreateChannelListDB
+    End Function
 End Module

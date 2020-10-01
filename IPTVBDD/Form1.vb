@@ -230,6 +230,7 @@ SubtitleTrackID2, SubtitleTrackName2, SubtitleCodec2, SubtitleLang2, SubtitleDes
         Dialog_WebLinkImg.Dispose()
         ImageView.Dispose()
         PictureBox_RLinkImg.Dispose()
+        BGW.Dispose()
         Dispose()
         End
     End Sub
@@ -451,39 +452,37 @@ SubtitleTrackID2, SubtitleTrackName2, SubtitleCodec2, SubtitleLang2, SubtitleDes
         End If
         Btn_StopScan.Enabled = False
         NumericUpDown1.ReadOnly = False
+        BGW.Dispose()
     End Sub
 
-    Private Sub BGW_ProgressChanged(sender As Object, e As ProgressChangedEventArgs) Handles BGW.ProgressChanged
-
-    End Sub
-
-    Private Sub VlcControl1_VideoOutChanged(sender As Object, e As VlcMediaPlayerVideoOutChangedEventArgs) Handles VlcControl1.VideoOutChanged
-
-
-    End Sub
 
     Private Sub VlcControl1_EncounteredError(sender As Object, e As VlcMediaPlayerEncounteredErrorEventArgs) Handles VlcControl1.EncounteredError
-        Threading.Thread.Sleep(1000)
-
-    End Sub
-
-    Private Sub ListBox1_TextChanged(sender As Object, e As EventArgs) Handles ListBox1.TextChanged
+        Threading.Thread.Sleep(500)
 
     End Sub
 
     Private Sub VlcControl1_Buffering(sender As Object, e As VlcMediaPlayerBufferingEventArgs) Handles VlcControl1.Buffering
-        Dim Buffer As String = e.NewCache.ToString
-        UpdateProgressBar(Buffer)
-
+        Dim BufferString As String = e.NewCache.ToString, Buffer As Single = e.NewCache
+        UpdateProgressBar(BufferString)
+        If Buffer < 100 Then
+            Application.DoEvents()
+            Threading.Thread.Sleep(100)
+            BufferVlc = False
+        Else
+            BufferVlc = True
+        End If
     End Sub
 
     Private Sub ListBox1_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles ListBox1.MouseDoubleClick
         ListBox1.Items.Clear()
     End Sub
 
+    Private Sub OnlyNoActiveToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OnlyNoActiveToolStripMenuItem.Click
+        ExportM3U(3)
+    End Sub
+
     Private Sub OnlyActiveStripMenuItem_Click(sender As Object, e As EventArgs) Handles OnlyActiveStripMenuItem.Click
         ExportM3U(2)
-
     End Sub
 
     Private Sub FullToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles FullToolStripMenuItem.Click
@@ -495,11 +494,10 @@ SubtitleTrackID2, SubtitleTrackName2, SubtitleCodec2, SubtitleLang2, SubtitleDes
         Dim AllFullAddress As String = FullAddress & i
         NoCanal = i
         VlcControl1.Play(New Uri(AllFullAddress))
-        Threading.Thread.Sleep(250)
         StatutBar_NoCanal.Text = CStr(i)
         Application.DoEvents()
         If VlcControl1.VlcMediaPlayer.CouldPlay = True Then
-            Threading.Thread.Sleep(2000)
+            Threading.Thread.Sleep(1000)
             If VlcControl1.IsPlaying = True Then
                 UpdateList($"Adresse : {FullAddress}{i})") ' Adresse du lien 
                 'Info Video 
@@ -674,9 +672,15 @@ SubtitleTrackID2, SubtitleTrackName2, SubtitleCodec2, SubtitleLang2, SubtitleDes
                 If tvg_logo <> Nothing Then UpdateList(tvg_logo)
                 If tvg_shift <> Nothing Then UpdateList(tvg_shift)
                 If group_title <> Nothing Then UpdateList(group_title)
+                'On recupere bien les données du fichier mais ensuite, on ne sait pas si ca existe déjà dans la base de données. 
+                'Il faut donc récuperer les données de la base de données si elles existent
+                'Il faut le faire par son numéro . Moi je le faisais par son nom mais si le nom n'est pas correct, il ne va pas le trouver, alors que le numéro, lui il est unique.
+                'Mais le but est de retrouver des infos sur une chaine portant le même nom, pour ne pas à avoir tout à retaper....
+                'Du coup, on doit faire les deux recherches
 
-                'ouverture de la sub Lecture des données
-                LectureBDD(i)
+                'Ouverture de la sub Lecture des données (recherche par NoCanal et Nomchaine)
+                LectureBDD(i, NoCanal, NomChaine)
+
                 'Mise a jour Info 
                 UpdateInfo(NomChaine, VideoTrackID, VideoTrackName, VideoCodec, VideoV, VideoH, VideoFPS, VideoOriginalCodec, AudioTrackID1, AudioTrackName1, AudioCodec1, AudioLang1, AudioChannel1, AudioRate1, AudioOriginalCodec1,
 AudioTrackID2, AudioTrackName2, AudioCodec2, AudioLang2, AudioChannel2, AudioRate2, AudioOriginalCodec2, SubTrackID1, SubTrackName1, SubCodec1, SubLang1, SubDesc1, SubOriginalCodec1,
@@ -722,7 +726,7 @@ SubTrackID2, SubTrackName2, SubCodec2, SubLang2, SubDesc2, SubOriginalCodec2)
 
 
                 UpdateList("********************************************************")
-                Threading.Thread.Sleep(10000)
+                Threading.Thread.Sleep(5000)
             Else
                 UpdateList("********************************************************")
                 UpdateList("Aucune chaine trouvé sur " & CStr(NoCanal))
@@ -743,5 +747,12 @@ SubTrackID2, SubTrackName2, SubCodec2, SubLang2, SubDesc2, SubOriginalCodec2)
         PictureBox_RLinkImg.Dispose()
         Dispose()
         End
+    End Sub
+
+    Private Sub UpdateListeDesLogosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles UpdateListeDesLogosToolStripMenuItem.Click
+        Dim Web As New HtmlAgilityPack.HtmlWeb, url As String = "http://informaweb.freeboxos.fr/iptv/logos_tv/"
+        Dim PageWeb = Web.Load(url), DernierAcces As String = File.GetLastWriteTime(FileWebLogo).ToString
+        PageWeb.Save(FileWebLogo)
+        MsgBox($"La liste des logos TV a été mise à jour le : {File.GetLastWriteTime(FileWebLogo).ToString}{vbCrLf}Sa dernière mise à jour était : {DernierAcces}{vbCrLf}", vbApplicationModal + vbInformation + vbOKOnly, "Update")
     End Sub
 End Class

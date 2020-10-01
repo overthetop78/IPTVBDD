@@ -5,6 +5,8 @@ Public Class ImageView
 
     'Création de la Sub qui récuperera les données
     Public Sub ImgList(ImageCountSub As Integer, ImageListSub As List(Of String))
+        ImageListName.Clear()
+        ImageListURL.Clear()
         If ImageCountSub > 0 Then
             ImageCount = ImageCountSub - 1
 
@@ -61,7 +63,7 @@ Public Class ImageView
         Try
             PictureView.ImageLocation = ImageListURL.Item(ScrollPic.Value)
             lbl_ImageName.Text = ImageListName.Item(ScrollPic.Value)
-            Threading.Thread.Sleep(500)
+            Threading.Thread.Sleep(100)
         Catch ex As Exception
             MsgBox(ex.Message, vbApplicationModal)
         End Try

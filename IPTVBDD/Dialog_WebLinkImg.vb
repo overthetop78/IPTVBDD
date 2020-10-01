@@ -81,7 +81,7 @@ Public Class Dialog_WebLinkImg
 
     Private Sub PictureBox_TestIMG_LoadCompleted(sender As Object, e As AsyncCompletedEventArgs) Handles PictureBox_TestIMG.LoadCompleted
         Try
-            Threading.Thread.Sleep(1000)
+            Threading.Thread.Sleep(500)
             IMGH = PictureBox_TestIMG.Image.Height
             IMGHR = PictureBox_TestIMG.Image.HorizontalResolution
             IMGV = PictureBox_TestIMG.Image.Width
