@@ -511,4 +511,49 @@ SubID1,SubName1,SubCodec1,SubLang1,SubDesc1,SubOriginalCodec1,SubID2,SubName2,Su
         CreateChannelListDB = True
         Return CreateChannelListDB
     End Function
+
+    Public Function RechercheNomChaine(NomChaineRech As String) As Boolean
+        Dim ReadId As Integer, ReadNomchaine As String = Nothing, ReadNomEPG As String = Nothing, ReadNoChaine As String = Nothing, ReadGroupeChaine As String = Nothing, ReadLinkLogo As String = Nothing,
+            ReadTimeshift As String = Nothing, ReadDescription As String = Nothing, ReadCatChaine As String = Nothing, ReadPays As String = Nothing
+        Try
+            Dim SQLConnexion As SqliteConnection = New SqliteConnection(DBConnect)
+            SQLConnexion.Open()
+            SQLCommand = SQLConnexion.CreateCommand()
+            'Recherche dans la table 
+            SQLCommand.CommandText = $"SELECT * FROM ChannelList WHERE NomChaine='{NomChaineRech}';"
+            Dim ResultReq As SqliteDataReader = SQLCommand.ExecuteReader()
+            Do While ResultReq.Read
+                ReadId = ResultReq(0)
+                ReadNomchaine = ResultReq(1)
+                ReadNomEPG = ResultReq(2)
+                ReadNoChaine = ResultReq(3)
+                ReadGroupeChaine = ResultReq(4)
+                ReadLinkLogo = ResultReq(5)
+                ReadTimeshift = ResultReq(6)
+                ReadDescription = ResultReq(7)
+                ReadCatChaine = ResultReq(8)
+                ReadPays = ResultReq(9)
+            Loop
+            If ResultReq.HasRows <> False Then
+                With Dialog_AskInfo
+                    .txt_tvg_id.Text = ReadNomEPG
+                    .txt_tvg_chno.Text = ReadNoChaine
+                    .txt_group.Text = ReadGroupeChaine
+                    .txt_categorie.Text = ReadCatChaine
+                    .txt_Desc.Text = ReadDescription
+                    .txt_tvg_shift.Text = ReadTimeshift
+                    .txt_Pays.Text = ReadPays
+                    .PictureBox_tvg_logo.ImageLocation = ReadLinkLogo
+                End With
+                Return True
+            Else
+                Return False
+            End If
+            ResultReq.Close()
+            SQLConnexion.Close()
+        Catch ex As Exception
+            Return False
+            MsgBox("L'erreur suivante a été rencontrée:" & ex.Message)
+        End Try
+    End Function
 End Module

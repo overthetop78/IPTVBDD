@@ -42,6 +42,7 @@ Partial Class Dialog_AskInfo
         Me.txt_Pays = New System.Windows.Forms.TextBox()
         Me.lbl_Pays = New System.Windows.Forms.Label()
         Me.PictureBox_tvg_logo = New System.Windows.Forms.PictureBox()
+        Me.Btn_Rech = New System.Windows.Forms.Button()
         CType(Me.PictureBox_tvg_logo, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -244,6 +245,15 @@ Partial Class Dialog_AskInfo
         Me.PictureBox_tvg_logo.TabStop = False
         Me.PictureBox_tvg_logo.WaitOnLoad = True
         '
+        'Btn_Rech
+        '
+        Me.Btn_Rech.Location = New System.Drawing.Point(783, 128)
+        Me.Btn_Rech.Name = "Btn_Rech"
+        Me.Btn_Rech.Size = New System.Drawing.Size(206, 36)
+        Me.Btn_Rech.TabIndex = 24
+        Me.Btn_Rech.Text = "Recherche"
+        Me.Btn_Rech.UseVisualStyleBackColor = True
+        '
         'Dialog_AskInfo
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
@@ -251,6 +261,7 @@ Partial Class Dialog_AskInfo
         Me.BackColor = System.Drawing.SystemColors.Control
         Me.CancelButton = Me.Cancel_Button
         Me.ClientSize = New System.Drawing.Size(1043, 818)
+        Me.Controls.Add(Me.Btn_Rech)
         Me.Controls.Add(Me.PictureBox_tvg_logo)
         Me.Controls.Add(Me.txt_Pays)
         Me.Controls.Add(Me.lbl_Pays)
@@ -303,4 +314,5 @@ Partial Class Dialog_AskInfo
     Friend WithEvents txt_Pays As TextBox
     Friend WithEvents lbl_Pays As Label
     Friend WithEvents PictureBox_tvg_logo As PictureBox
+    Friend WithEvents Btn_Rech As Button
 End Class

@@ -213,7 +213,7 @@ Public Class Dialog_AskInfo
         txt_tvg_id.Clear()
     End Sub
 
-    Private Sub txt_tvg_shift_TextChanged(sender As Object, e As EventArgs) Handles txt_tvg_shift.TextChanged
+    Private Sub txt_tvg_shift_MouseDoubleClick(sender As Object, e As EventArgs) Handles txt_tvg_shift.MouseDoubleClick
         txt_tvg_shift.Clear()
     End Sub
 
@@ -225,4 +225,17 @@ Public Class Dialog_AskInfo
         txt_NomChaine.Clear()
     End Sub
 
+    Private Sub Btn_Rech_Click(sender As Object, e As EventArgs) Handles Btn_Rech.Click
+        'le bouton recherche permet de rechercher dans la base de données s'il y a déjà des infos sur la chaine , ce qui évite de tout réécrire
+        Dim NomChaineRech As String = txt_NomChaine.Text
+        If NomChaineRech = Nothing Or NomChaineRech = "" Then
+            MsgBox("Aucun nom de chaine !" + vbApplicationModal + vbOKOnly + vbExclamation, "Erreur")
+        Else
+            'On peut rechercher le nom dans la BDD, on va voir s'il donne un resultat ou non
+            Dim Result As Boolean = RechercheNomChaine(NomChaineRech)
+            If Result = False Then
+                MsgBox($"Aucune entrée trouvée pour : {NomChaineRech}", vbApplicationModal + vbExclamation + vbOKOnly, "Erreur")
+            End If
+        End If
+    End Sub
 End Class
