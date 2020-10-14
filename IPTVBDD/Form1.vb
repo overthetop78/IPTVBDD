@@ -62,46 +62,51 @@ Public Class Form1
 
     Public Delegate Sub UpdateDialogDelegate(Question As Integer, OldAnswer As String)
     Public Sub UpdateDialog(Question As Integer, OldAnswer As String)
-        If InvokeRequired Then
-            Invoke(New UpdateDialogDelegate(AddressOf UpdateDialog), Question, OldAnswer)
-        Else
-            Select Case Question
-                Case 1
-                    NomChaine = HtmlDecode(OldAnswer)
-                    Dialog_AskInfo.txt_NomChaine.Text = NomChaine
-                Case 2
-                    tvg_id = HtmlDecode(OldAnswer)
-                    Dialog_AskInfo.txt_tvg_id.Text = tvg_id
-                Case 3
-                    tvg_chno = OldAnswer
-                    Dialog_AskInfo.txt_tvg_chno.Text = tvg_chno
-                Case 4
-                    group_title = HtmlDecode(OldAnswer)
-                    Dialog_AskInfo.txt_group.Text = group_title
-                Case 5
-                    tvg_shift = OldAnswer
-                    Dialog_AskInfo.txt_tvg_shift.Text = tvg_shift
-                Case 6
-                    tvg_logo = OldAnswer
-                    If OldAnswer = Nothing Or OldAnswer = "" Then
-                        Dialog_AskInfo.PictureBox_tvg_logo.Image = Nothing
-                        Dialog_AskInfo.PictureBox_tvg_logo.BackgroundImage = Nothing
-                    Else
-                        Dialog_AskInfo.PictureBox_tvg_logo.ImageLocation = tvg_logo
-                    End If
-                Case 7
-                    Pays = HtmlDecode(OldAnswer)
-                    Dialog_AskInfo.txt_Pays.Text = Pays
-                Case 8
-                    Desc = HtmlDecode(OldAnswer)
-                    Dialog_AskInfo.txt_Desc.Text = Desc
-                Case 9
-                    Cat = HtmlDecode(OldAnswer)
-                    Dialog_AskInfo.txt_categorie.Text = Cat
-                Case Else
-                    Exit Select
-            End Select
-        End If
+        Try
+            If InvokeRequired Then
+                Invoke(New UpdateDialogDelegate(AddressOf UpdateDialog), Question, OldAnswer)
+            Else
+                Select Case Question
+                    Case 1
+                        NomChaine = HtmlDecode(OldAnswer)
+                        Dialog_AskInfo.txt_NomChaine.Text = NomChaine
+                    Case 2
+                        tvg_id = HtmlDecode(OldAnswer)
+                        Dialog_AskInfo.txt_tvg_id.Text = tvg_id
+                    Case 3
+                        tvg_chno = OldAnswer
+                        Dialog_AskInfo.txt_tvg_chno.Text = tvg_chno
+                    Case 4
+                        group_title = HtmlDecode(OldAnswer)
+                        Dialog_AskInfo.txt_group.Text = group_title
+                    Case 5
+                        tvg_shift = OldAnswer
+                        Dialog_AskInfo.txt_tvg_shift.Text = tvg_shift
+                    Case 6
+                        tvg_logo = OldAnswer
+                        If OldAnswer = Nothing Or OldAnswer = "" Then
+                            Dialog_AskInfo.PictureBox_tvg_logo.Image = Nothing
+                            Dialog_AskInfo.PictureBox_tvg_logo.BackgroundImage = Nothing
+                        Else
+                            Dialog_AskInfo.PictureBox_tvg_logo.ImageLocation = tvg_logo
+                        End If
+                    Case 7
+                        Pays = HtmlDecode(OldAnswer)
+                        Dialog_AskInfo.txt_Pays.Text = Pays
+                    Case 8
+                        Desc = HtmlDecode(OldAnswer)
+                        Dialog_AskInfo.txt_Desc.Text = Desc
+                    Case 9
+                        Cat = HtmlDecode(OldAnswer)
+                        Dialog_AskInfo.txt_categorie.Text = Cat
+                    Case Else
+                        Exit Select
+                End Select
+            End If
+        Catch ex As Exception
+            MsgBox($"Erreur : {ex.Message}", vbApplicationModal + vbExclamation + vbOKOnly, "Erreur")
+            Exit Sub
+        End Try
     End Sub
 
     Public Delegate Sub UpdateInfoDelegate(ByVal NomChaine, VideoTrackID, VideoTrackName, VideoCodec, VideoV, VideoH, VideoFPS, VideoOriginalCodec, AudioTrackID, AudioTrackName, AudioCodec, AudioLang, AudioChannel, AudioRate, AudioOriginalCodec,
@@ -492,12 +497,46 @@ SubtitleTrackID2, SubtitleTrackName2, SubtitleCodec2, SubtitleLang2, SubtitleDes
     Public Function ScannerFull(ByVal i As Integer, ByVal ScanType As Integer, ByVal FichierM3U As String, ByVal FullAddress As String, ByVal AdresseHTTP As String) As Boolean
         'i = i + CInt(NumericUpDown1.Value)
         Dim AllFullAddress As String = FullAddress & i
+        VideoTrackID = 0
+        VideoTrackName = Nothing
+        VideoCodec = Nothing
+        VideoV = 0
+        VideoH = 0
+        VideoFPS = 0
+        VideoOriginalCodec = Nothing
+        AudioTrackID1 = 0
+        AudioTrackName1 = Nothing
+        AudioCodec1 = Nothing
+        AudioLang1 = Nothing
+        AudioChannel1 = 0
+        AudioRate1 = 0
+        AudioOriginalCodec1 = Nothing
+        AudioTrackID2 = 0
+        AudioTrackName2 = Nothing
+        AudioCodec2 = Nothing
+        AudioLang2 = Nothing
+        AudioChannel2 = 0
+        AudioRate2 = 0
+        AudioOriginalCodec2 = Nothing
+        SubTrackID1 = 0
+        SubTrackName1 = Nothing
+        SubCodec1 = Nothing
+        SubLang1 = Nothing
+        SubDesc1 = Nothing
+        SubOriginalCodec1 = Nothing
+        SubTrackID2 = 0
+        SubTrackName2 = Nothing
+        SubCodec2 = Nothing
+        SubLang2 = Nothing
+        SubDesc2 = Nothing
+        SubOriginalCodec2 = Nothing
         NoCanal = i
         VlcControl1.Play(New Uri(AllFullAddress))
         StatutBar_NoCanal.Text = CStr(i)
         Application.DoEvents()
         If VlcControl1.VlcMediaPlayer.CouldPlay = True Then
-            Threading.Thread.Sleep(1000)
+            'attente de deux secondes pour que la chaine s'initialise bien. 
+            Threading.Thread.Sleep(2000)
             If VlcControl1.IsPlaying = True Then
                 UpdateList($"Adresse : {FullAddress}{i})") ' Adresse du lien 
                 'Info Video 
@@ -679,7 +718,7 @@ SubtitleTrackID2, SubtitleTrackName2, SubtitleCodec2, SubtitleLang2, SubtitleDes
                 'Du coup, on doit faire les deux recherches
 
                 'Ouverture de la sub Lecture des données (recherche par NoCanal et Nomchaine)
-                LectureBDD(i, NoCanal, NomChaine)
+                LectureBDD(i, NoCanal, HtmlEncode(NomChaine))
 
                 'Mise a jour Info 
                 UpdateInfo(NomChaine, VideoTrackID, VideoTrackName, VideoCodec, VideoV, VideoH, VideoFPS, VideoOriginalCodec, AudioTrackID1, AudioTrackName1, AudioCodec1, AudioLang1, AudioChannel1, AudioRate1, AudioOriginalCodec1,
@@ -726,11 +765,13 @@ SubTrackID2, SubTrackName2, SubCodec2, SubLang2, SubDesc2, SubOriginalCodec2)
 
 
                 UpdateList("********************************************************")
+                'Attente de 5 secondes , histoire de ne pas envoyer trop de demande en même temps
                 Threading.Thread.Sleep(5000)
             Else
                 UpdateList("********************************************************")
                 UpdateList("Aucune chaine trouvé sur " & CStr(NoCanal))
                 UpdateList("********************************************************")
+                'Attente d'une seconde entre les canaux vides
                 Threading.Thread.Sleep(1000)
             End If
         End If

@@ -398,7 +398,7 @@ SubID1,SubName1,SubCodec1,SubLang1,SubDesc1,SubOriginalCodec1,SubID2,SubName2,Su
         Try
             Do While ResultReq.Read
                 RNoCanal = ResultReq(0)
-                RNomChaine2 = ResultReq(1)
+                RNomChaine2 = HtmlDecode(ResultReq(1))
                 RVideoID = ResultReq(2)
                 RVideoName = ResultReq(3)
                 RVideoCodec = ResultReq(4)
@@ -438,7 +438,7 @@ SubID1,SubName1,SubCodec1,SubLang1,SubDesc1,SubOriginalCodec1,SubID2,SubName2,Su
             MsgBox(ErreurReq, vbApplicationModal)
         End Try
         ' Si il y a un resultat, mais qu'il est différent de NomChaineReq alors on prendra ce NomChaine pour la recherche, sinon on garde le NomChaineReq
-        If RNomChaine2 <> Nothing And RNomChaine2 <> NomChaineReq Then RNomChaine = RNomChaine2 Else RNomChaine = NomChaineReq
+        If RNomChaine2 <> Nothing And RNomChaine2 <> NomChaineReq Then RNomChaine = HtmlEncode(RNomChaine2) Else RNomChaine = HtmlEncode(NomChaineReq)
         ResultReq.Close()
 
         SQLCommand = SQLConnexion.CreateCommand
@@ -447,15 +447,15 @@ SubID1,SubName1,SubCodec1,SubLang1,SubDesc1,SubOriginalCodec1,SubID2,SubName2,Su
         ResultReq = SQLCommand.ExecuteReader()
         Try
             Do While ResultReq.Read
-                RNomChaine = ResultReq(1)
-                RNomEPG = ResultReq(2)
+                RNomChaine = HtmlDecode(ResultReq(1))
+                RNomEPG = HtmlDecode(ResultReq(2))
                 RNoChaine = ResultReq(3)
-                RGroupChaine = ResultReq(4)
+                RGroupChaine = HtmlDecode(ResultReq(4))
                 RLinkLogo = ResultReq(5)
-                RTimeshift = ResultReq(6)
-                RDescription = ResultReq(7)
-                RCatChaine = ResultReq(8)
-                RPays = ResultReq(9)
+                RTimeshift = HtmlDecode(ResultReq(6))
+                RDescription = HtmlDecode(ResultReq(7))
+                RCatChaine = HtmlDecode(ResultReq(8))
+                RPays = HtmlDecode(ResultReq(9))
             Loop
             'Si on a une entrée , on va chercher
             If ResultReq.HasRows <> False Then
@@ -520,19 +520,19 @@ SubID1,SubName1,SubCodec1,SubLang1,SubDesc1,SubOriginalCodec1,SubID2,SubName2,Su
             SQLConnexion.Open()
             SQLCommand = SQLConnexion.CreateCommand()
             'Recherche dans la table 
-            SQLCommand.CommandText = $"SELECT * FROM ChannelList WHERE NomChaine='{NomChaineRech}';"
+            SQLCommand.CommandText = $"SELECT * FROM ChannelList WHERE NomChaine='{HtmlEncode(NomChaineRech)}';"
             Dim ResultReq As SqliteDataReader = SQLCommand.ExecuteReader()
             Do While ResultReq.Read
                 ReadId = ResultReq(0)
-                ReadNomchaine = ResultReq(1)
-                ReadNomEPG = ResultReq(2)
+                ReadNomchaine = HtmlDecode(ResultReq(1))
+                ReadNomEPG = HtmlDecode(ResultReq(2))
                 ReadNoChaine = ResultReq(3)
-                ReadGroupeChaine = ResultReq(4)
+                ReadGroupeChaine = HtmlDecode(ResultReq(4))
                 ReadLinkLogo = ResultReq(5)
                 ReadTimeshift = ResultReq(6)
-                ReadDescription = ResultReq(7)
-                ReadCatChaine = ResultReq(8)
-                ReadPays = ResultReq(9)
+                ReadDescription = HtmlDecode(ResultReq(7))
+                ReadCatChaine = HtmlDecode(ResultReq(8))
+                ReadPays = HtmlDecode(ResultReq(9))
             Loop
             If ResultReq.HasRows <> False Then
                 With Dialog_AskInfo
