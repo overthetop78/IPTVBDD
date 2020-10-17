@@ -3,8 +3,6 @@ Imports System.Windows.Forms
 Imports HtmlAgilityPack
 
 Public Class Dialog_AskInfo
-    Public FileWebLogo As String = Application.StartupPath & "\listelogo.txt"
-
 
     Private Sub OK_Button_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OK_Button.Click
         'Bouton modifier
@@ -175,11 +173,14 @@ Public Class Dialog_AskInfo
             Loop
 
             'On envoie les données
+            Strm.Close()
+            Strm.Dispose()
+            PageWeb.Clear()
+            Ligne = Nothing
             ImageView.ImgList(Resultat.Count, Resultat)
             Resultat.Clear()
-            Strm.Close()
-            Ligne = Nothing
-            PageWeb.Clear()
+
+
 
         Catch ex As Exception
             MsgBox("Erreur: " & ex.Message, vbApplicationModal + vbOKOnly, "Erreur")

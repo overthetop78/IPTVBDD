@@ -25,7 +25,7 @@ Module mod_var
     Public SubLevel1 As Integer = 0, SubOriginalCodec1 As String = Nothing, SubProfile1 As Integer = 0
     Public SubCodec2 As String = Nothing, SubTrack2 As SubtitleTrack, SubTrackEnc2 As String = Nothing, SubBitrate2 As Integer = 0, SubDesc2 As String = Nothing, SubID2 As Integer = 0, SubLang2 As String = Nothing
     Public SubLevel2 As Integer = 0, SubOriginalCodec2 As String = Nothing, SubProfile2 As Integer = 0
-    Public SubTrackID1 As Integer = 0, SubTrackName1 As String = Nothing, SubTrackID2 As Integer = 0, SubTrackName2 As String = Nothing
+    Public SubTrackID1 As Integer = 0, SubTrackName1 As String = Nothing, SubTrackID2 As Integer = 0, SubTrackName2 As String = Nothing, Definition As String = Nothing
     Public SQLConnexion As SqliteConnection, SQLCommand As SqliteCommand
     Public TestLink As String = Nothing
     Public IMGH As Integer, IMGHR As Integer, IMGV As Integer, IMGVR As Integer, IMGPixel As Imaging.PixelFormat, IMGPalette As Imaging.ColorPalette, IMGRawFormat As Imaging.ImageFormat

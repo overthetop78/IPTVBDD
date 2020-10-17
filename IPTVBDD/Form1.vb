@@ -127,7 +127,7 @@ SubtitleTrackID2, SubtitleTrackName2, SubtitleCodec2, SubtitleLang2, SubtitleDes
             lbl_VideoCodecVal.Text = UCase(VideoCodec)
             lbl_VideoResVal.Text = CStr(VideoV) & "x" & CStr(VideoH)
             lbl_VideoFPSVal.Text = CStr(VideoFPS) & " FPS"
-            lbl_VideoDefVal.Text = CStr(VideoH) & "P"
+            lbl_VideoDefVal.Text = CStr(VideoH) & Definition
             lbl_VideoOriginalCodecVal.Text = UCase(VideoOriginalCodec)
             'Audio 1
             lbl_AudioID1Val.Text = CStr(AudioTrackID)
@@ -220,11 +220,11 @@ SubtitleTrackID2, SubtitleTrackName2, SubtitleCodec2, SubtitleLang2, SubtitleDes
         StatutBar_InfoBGW.ToolTipText = "Aucun fichier chargé"
         NumericUpDown1.ReadOnly = False
 
-        If File.Exists(FileWebLogo) = False Or File.GetLastWriteTime(FileWebLogo) < Date.Today Then
-            Dim Web As New HtmlAgilityPack.HtmlWeb, url As String = "http://informaweb.freeboxos.fr/iptv/logos_tv/"
-            Dim PageWeb = Web.Load(url)
-            PageWeb.Save(FileWebLogo)
-        End If
+        'If File.Exists(FileWebLogo) = False Or File.GetLastWriteTime(FileWebLogo) < Date.Today Then
+        Dim Web As New HtmlAgilityPack.HtmlWeb, url As String = "http://informaweb.freeboxos.fr/iptv/logos_tv/"
+        Dim PageWeb = Web.Load(url)
+        PageWeb.Save(FileWebLogo)
+        'End If
 
     End Sub
 
@@ -565,13 +565,14 @@ SubtitleTrackID2, SubtitleTrackName2, SubtitleCodec2, SubtitleLang2, SubtitleDes
                 ' FPS 
                 VideoFPS = VlcControl1.VlcMediaPlayer.FramesPerSecond
                 UpdateList("[VIDEO]")
-                UpdateList("Codec : " & VideoCodec)
-                UpdateList("Definition : " & CStr(VideoH) & "P | Resolution : " & CStr(VideoV) & "x" & CStr(VideoH))
-                UpdateList("BitRate : " & CStr(VideoBitRate) & " | Description : " & VideoDesc)
-                UpdateList("ID : " & CStr(VideoID) & " | Langue : " & VideoLang & " | Level : " & CStr(VideoLevel))
-                UpdateList("Original Codec : " & VideoOriginalCodec & "| Profile : " & CStr(VideoProfile))
-                UpdateList("ID Video : " & CStr(VideoTrackID) & " | Nom Video : " & VideoTrackName)
-                UpdateList("FPS : " & CStr(VideoFPS))
+                UpdateList($"Codec : {VideoCodec}")
+                If VideoFPS > 30 Then Definition = "p" Else Definition = "i" 'Si les FPS sont de plus de 30 (50/60fps) alors la vidéo est en "progressif", sinon a 25/30 fps, c'est entrelacé (Interlaced) 
+                UpdateList($"Definition : {CStr(VideoH)}{Definition} | Resolution : {CStr(VideoV)}x{CStr(VideoH)}")
+                UpdateList($"BitRate : {CStr(VideoBitRate)} | Description : {VideoDesc}")
+                UpdateList($"ID : {CStr(VideoID)} | Langue : {VideoLang} | Level : {CStr(VideoLevel)}")
+                UpdateList($"Original Codec : {VideoOriginalCodec} | Profile : {CStr(VideoProfile)}")
+                UpdateList($"ID Video : {CStr(VideoTrackID)} | Nom Video : {VideoTrackName}")
+                UpdateList($"FPS : {CStr(VideoFPS)}")
                 UpdateList("-------------------------------------------------------------------")
                 'Info Audio
                 'Audio 1
@@ -594,12 +595,12 @@ SubtitleTrackID2, SubtitleTrackName2, SubtitleCodec2, SubtitleLang2, SubtitleDes
                     AudioTrackID1 = VlcControl1.Audio.Tracks.Current.ID
                     AudioTrackName1 = VlcControl1.Audio.Tracks.Current.Name
                     UpdateList("[AUDIO 1]")
-                    UpdateList("Codec : " & AudioCodec1)
-                    UpdateList("Canaux : " & CStr(AudioChannel1) & " | Rate : " & CStr(AudioRate1))
-                    UpdateList("BitRate : " & CStr(AudioBitRate1) & " | Description : " & AudioDesc1)
-                    UpdateList("ID : " & CStr(AudioID1) & " | Langue : " & AudioLang1 & " | Level : " & CStr(AudioLevel1))
-                    UpdateList("Original Codec : " & AudioOriginalCodec1 & "| Profile : " & CStr(AudioProfile1))
-                    UpdateList("ID Audio : " & CStr(AudioTrackID1) & " | Nom Audio : " & AudioTrackName1)
+                    UpdateList($"Codec : {AudioCodec1}")
+                    UpdateList($"Canaux : {CStr(AudioChannel1)} | Rate : {CStr(AudioRate1)}")
+                    UpdateList($"BitRate : {CStr(AudioBitRate1)} | Description : {AudioDesc1}")
+                    UpdateList($"ID : {CStr(AudioID1)} | Langue : {AudioLang1} | Level : {CStr(AudioLevel1)}")
+                    UpdateList($"Original Codec : {AudioOriginalCodec1} | Profile : {CStr(AudioProfile1)}")
+                    UpdateList($"ID Audio : {CStr(AudioTrackID1)} | Nom Audio : {AudioTrackName1}")
                     UpdateList("-------------------------------------------------------------------")
                 End If
                 'Audio 2
@@ -625,12 +626,12 @@ SubtitleTrackID2, SubtitleTrackName2, SubtitleCodec2, SubtitleLang2, SubtitleDes
                     AudioTrackID2 = VlcControl1.Audio.Tracks.Current.ID
                     AudioTrackName2 = VlcControl1.Audio.Tracks.Current.Name
                     UpdateList("[AUDIO 2]")
-                    UpdateList("Codec : " & AudioCodec2)
-                    UpdateList("Canaux : " & CStr(AudioChannel2) & " | Rate : " & CStr(AudioRate2))
-                    UpdateList("BitRate : " & CStr(AudioBitRate2) & " | Description : " & AudioDesc2)
-                    UpdateList("ID : " & CStr(AudioID2) & " | Langue : " & AudioLang2 & " | Level : " & CStr(AudioLevel2))
-                    UpdateList("Original Codec : " & AudioOriginalCodec2 & "| Profile : " & CStr(AudioProfile2))
-                    UpdateList("ID Audio : " & CStr(AudioTrackID2) & " | Nom Audio : " & AudioTrackName2)
+                    UpdateList($"Codec : {AudioCodec2}")
+                    UpdateList($"Canaux : {CStr(AudioChannel2)} | Rate : {CStr(AudioRate2)}")
+                    UpdateList($"BitRate : {CStr(AudioBitRate2)} | Description : {AudioDesc2}")
+                    UpdateList($"ID : {CStr(AudioID2)} | Langue : {AudioLang2} | Level : {CStr(AudioLevel2)}")
+                    UpdateList($"Original Codec : {AudioOriginalCodec2} | Profile : {CStr(AudioProfile2)}")
+                    UpdateList($"ID Audio : {CStr(AudioTrackID2)} | Nom Audio : {AudioTrackName2}")
                     UpdateList("-------------------------------------------------------------------")
                 End If
                 'Info Sous-Titre
@@ -654,12 +655,12 @@ SubtitleTrackID2, SubtitleTrackName2, SubtitleCodec2, SubtitleLang2, SubtitleDes
                     SubTrackID1 = VlcControl1.SubTitles.Current.ID
                     SubTrackName1 = VlcControl1.SubTitles.Current.Name
                     UpdateList("[SUBTITLE 1]")
-                    UpdateList("Codec : " & SubCodec1)
-                    UpdateList("Encodage : " & SubTrackEnc1)
-                    UpdateList("BitRate : " & CStr(SubBitrate1) & " | Description : " & SubDesc1)
-                    UpdateList("ID : " & CStr(SubID1) & " | Langue : " & SubLang1 & " | Level : " & CStr(SubLevel1))
-                    UpdateList("Original Codec : " & SubOriginalCodec1 & "| Profile : " & CStr(SubProfile1))
-                    UpdateList("ID Sub : " & CStr(SubTrackID1) & " | Nom Sub : " & SubTrackName1)
+                    UpdateList($"Codec : {SubCodec1}")
+                    UpdateList($"Encodage : {SubTrackEnc1}")
+                    UpdateList($"BitRate : {CStr(SubBitrate1)} | Description : {SubDesc1}")
+                    UpdateList($"ID : {CStr(SubID1)} | Langue : {SubLang1} | Level : {CStr(SubLevel1)}")
+                    UpdateList($"Original Codec : {SubOriginalCodec1} | Profile : {CStr(SubProfile1)}")
+                    UpdateList($"ID Sub : {CStr(SubTrackID1)} | Nom Sub : {SubTrackName1}")
                     UpdateList("-------------------------------------------------------------------")
                 End If
                 If VlcControl1.SubTitles.Count >= 3 Then
@@ -683,12 +684,12 @@ SubtitleTrackID2, SubtitleTrackName2, SubtitleCodec2, SubtitleLang2, SubtitleDes
                     SubTrackID2 = VlcControl1.SubTitles.Current.ID
                     SubTrackName2 = VlcControl1.SubTitles.Current.Name
                     UpdateList("[SUBTITLE 2]")
-                    UpdateList("Codec : " & SubCodec2)
-                    UpdateList("Encodage : " & SubTrackEnc2)
-                    UpdateList("BitRate : " & CStr(SubBitrate2) & " | Description : " & SubDesc2)
-                    UpdateList("ID : " & CStr(SubID2) & " | Langue : " & SubLang2 & " | Level : " & CStr(SubLevel2))
-                    UpdateList("Original Codec : " & SubOriginalCodec2 & "| Profile : " & CStr(SubProfile2))
-                    UpdateList("ID Sub : " & CStr(SubTrackID2) & " | Nom Sub : " & SubTrackName2)
+                    UpdateList($"Codec : {SubCodec2}")
+                    UpdateList($"Encodage : {SubTrackEnc2}")
+                    UpdateList($"BitRate : {CStr(SubBitrate2)} | Description : {SubDesc2}")
+                    UpdateList($"ID : {CStr(SubID2)} | Langue : {SubLang2} | Level : {CStr(SubLevel2)}")
+                    UpdateList($"Original Codec : {SubOriginalCodec2} | Profile : {CStr(SubProfile2)}")
+                    UpdateList($"ID Sub : {CStr(SubTrackID2)} | Nom Sub : {SubTrackName2}")
                     UpdateList("-------------------------------------------------------------------")
                 End If
                 'Vider toutes les variables avant de les remplir

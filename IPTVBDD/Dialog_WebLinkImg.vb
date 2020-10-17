@@ -44,6 +44,10 @@ Public Class Dialog_WebLinkImg
                     MsgBox("Client non connecté", vbApplicationModal + vbOKOnly)
                 End If
             End Using
+            'On sauvegarde la nouvelle liste
+            Dim Web As New HtmlAgilityPack.HtmlWeb, url As String = "http://informaweb.freeboxos.fr/iptv/logos_tv/"
+            Dim PageWeb = Web.Load(url)
+            PageWeb.Save(FileWebLogo)
 
             Me.Close()
             ImageView.Close()
@@ -97,11 +101,7 @@ Public Class Dialog_WebLinkImg
         'on a réussi a avoir toutes les infos de l'image permettant de savoir si l'image est bonne
         'Si l'image ne fait pas la taille voulue on indique que l'image n'est pas bonne, sinon on permet d'accepter l'image
         If IMGH < 200 And IMGV < 200 And IMGHR < 30 And IMGVR < 30 Then MsgBox($"Image trop petite : {IMGV}x{IMGH} - Res: {IMGVR}x{IMGHR}{vbCrLf}L'image doit dépasser 200x200 - Res: 30x30", vbApplicationModal + vbExclamation + vbOKOnly) Else Btn_Accept.Enabled = True
-
-
-
         'sinon c'est bon on peut rajouter l'image 
-
 
     End Sub
 
