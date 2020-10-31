@@ -12,6 +12,7 @@ Public Class Dialog_WebLinkImg
             NomIMG = HtmlDecode(NomChaineRech)
             NomIMG = Replace(NomIMG, " ", "_")
             NomIMG = Replace(NomIMG, "%20", "_")
+            NomIMG = Replace(NomIMG, "#", "_")
             NomIMG = NomIMG & ".png"
             Dim SSH_Host As String = "82.64.11.82"
             Dim SSH_Port As Integer = 2222
@@ -70,7 +71,7 @@ Public Class Dialog_WebLinkImg
 
         If TestLink.IndexOf("http") = -1 Then Exit Sub
         Try
-            If TestLink.IndexOf(".png") <> -1 Or TestLink.IndexOf(".jpg") <> -1 Or TestLink.IndexOf(".jpeg") <> -1 Or TestLink.IndexOf(".gif") <> -1 Then
+            If TestLink.IndexOf(".png", StringComparison.CurrentCultureIgnoreCase) <> -1 Or TestLink.IndexOf(".jpg", StringComparison.CurrentCultureIgnoreCase) <> -1 Or TestLink.IndexOf(".jpeg", StringComparison.CurrentCultureIgnoreCase) <> -1 Or TestLink.IndexOf(".gif", StringComparison.CurrentCultureIgnoreCase) <> -1 Or TestLink.IndexOf(".bmp", StringComparison.CurrentCultureIgnoreCase) <> -1 Or TestLink.IndexOf(".webp", StringComparison.CurrentCultureIgnoreCase) <> -1 Then
                 'on peut afficher l'image et recuperer ce qu'on trouve 
                 PictureBox_TestIMG.ImageLocation = TestLink
             End If

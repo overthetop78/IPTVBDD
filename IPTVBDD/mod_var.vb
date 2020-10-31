@@ -26,7 +26,7 @@ Module mod_var
     Public SubCodec2 As String = Nothing, SubTrack2 As SubtitleTrack, SubTrackEnc2 As String = Nothing, SubBitrate2 As Integer = 0, SubDesc2 As String = Nothing, SubID2 As Integer = 0, SubLang2 As String = Nothing
     Public SubLevel2 As Integer = 0, SubOriginalCodec2 As String = Nothing, SubProfile2 As Integer = 0
     Public SubTrackID1 As Integer = 0, SubTrackName1 As String = Nothing, SubTrackID2 As Integer = 0, SubTrackName2 As String = Nothing, Definition As String = Nothing
-    Public SQLConnexion As SqliteConnection, SQLCommand As SqliteCommand
+    Public SQLConnexion As SqliteConnection, SQLConnexion2 As SqliteConnection, SQLCommand As SqliteCommand, SQLCommand2 As SqliteCommand, Result2 As SqliteDataReader
     Public TestLink As String = Nothing
     Public IMGH As Integer, IMGHR As Integer, IMGV As Integer, IMGVR As Integer, IMGPixel As Imaging.PixelFormat, IMGPalette As Imaging.ColorPalette, IMGRawFormat As Imaging.ImageFormat
     Public RNoCanal As Integer = 0, RNomChaine As String = Nothing, RNomChaine2 As String = Nothing, RNomEPG As String = Nothing, RNoChaine As String = Nothing, RGroupChaine As String = Nothing, RLinkLogo As String = Nothing, RTimeshift As String = Nothing,

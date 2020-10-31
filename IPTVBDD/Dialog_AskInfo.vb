@@ -151,20 +151,23 @@ Public Class Dialog_AskInfo
                 For Each s As String In Split
                     'Si le mot est trouvé dans la ligne
                     If Ligne.IndexOf(s, 0, Ligne.Length, StringComparison.CurrentCultureIgnoreCase) <> -1 Then
-                        'Si Split a plus d'un mot
-                        If Split.Count > 1 Then
-                            'Si la longueur est plus grande que 2
-                            If s.Length > 2 Then
-                                'si la ligne n'est pas déjà dans le fichier pour eviter d'avoir des doublons ou si resultat ne contient rien
-                                If Resultat.Count < 1 Or Resultat.IndexOf(Ligne) = -1 Then
-                                    'On ajoute la ligne
-                                    Resultat.Add(Ligne)
+                        'bug sur le mot White de <body bgcolor= , donc on va dire qu'il ignore cette ligne. 
+                        If Ligne.IndexOf("<body bgcolor=", 0, Ligne.Length, StringComparison.CurrentCultureIgnoreCase) = -1 Then
+                            'Si Split a plus d'un mot
+                            If Split.Count > 1 Then
+                                'Si la longueur est plus grande que 2
+                                If s.Length > 2 Then
+                                    'si la ligne n'est pas déjà dans le fichier pour eviter d'avoir des doublons ou si resultat ne contient rien
+                                    If Resultat.Count < 1 Or Resultat.IndexOf(Ligne) = -1 Then
+                                        'On ajoute la ligne
+                                        Resultat.Add(Ligne)
+                                    End If
+                                    'Sinon si longueur plus petit que 2
                                 End If
-                                'Sinon si longueur plus petit que 2
-                            End If
                                 'Si Split = 1 mot seulement
                             ElseIf Split.Count = 1 Then
-                            Resultat.Add(Ligne)
+                                Resultat.Add(Ligne)
+                            End If
                         End If
                     End If
                 Next

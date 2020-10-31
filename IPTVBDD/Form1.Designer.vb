@@ -43,6 +43,8 @@ Partial Class Form1
         Me.ListeScanToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ActiveScanToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.NoActiveScanToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.OptionsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.UpdateListeDesLogosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         Me.VlcControl1 = New Vlc.DotNet.Forms.VlcControl()
         Me.BGW = New System.ComponentModel.BackgroundWorker()
@@ -139,8 +141,6 @@ Partial Class Form1
         Me.lbl_RNoCanal = New System.Windows.Forms.Label()
         Me.lbl_RNomChaine = New System.Windows.Forms.Label()
         Me.CheckBox_ShowLogs = New System.Windows.Forms.CheckBox()
-        Me.OptionsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.UpdateListeDesLogosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuStrip1.SuspendLayout()
         CType(Me.VlcControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.StatusStrip1.SuspendLayout()
@@ -205,14 +205,14 @@ Partial Class Form1
         Me.FullToolStripMenuItem.Name = "FullToolStripMenuItem"
         Me.FullToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F9
         Me.FullToolStripMenuItem.Size = New System.Drawing.Size(256, 30)
-        Me.FullToolStripMenuItem.Text = "Full"
+        Me.FullToolStripMenuItem.Text = "Full DataBase"
         '
         'OnlyActiveStripMenuItem
         '
         Me.OnlyActiveStripMenuItem.Name = "OnlyActiveStripMenuItem"
         Me.OnlyActiveStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F10
         Me.OnlyActiveStripMenuItem.Size = New System.Drawing.Size(256, 30)
-        Me.OnlyActiveStripMenuItem.Text = "Only Active"
+        Me.OnlyActiveStripMenuItem.Text = "By Num"
         '
         'OnlyNoActiveToolStripMenuItem
         '
@@ -275,29 +275,42 @@ Partial Class Form1
         '
         Me.FullScanToolStripMenuItem.Name = "FullScanToolStripMenuItem"
         Me.FullScanToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5
-        Me.FullScanToolStripMenuItem.Size = New System.Drawing.Size(252, 30)
+        Me.FullScanToolStripMenuItem.Size = New System.Drawing.Size(246, 30)
         Me.FullScanToolStripMenuItem.Text = "Full Scan"
         '
         'ListeScanToolStripMenuItem
         '
         Me.ListeScanToolStripMenuItem.Name = "ListeScanToolStripMenuItem"
         Me.ListeScanToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F6
-        Me.ListeScanToolStripMenuItem.Size = New System.Drawing.Size(252, 30)
+        Me.ListeScanToolStripMenuItem.Size = New System.Drawing.Size(246, 30)
         Me.ListeScanToolStripMenuItem.Text = "Liste Scan"
         '
         'ActiveScanToolStripMenuItem
         '
         Me.ActiveScanToolStripMenuItem.Name = "ActiveScanToolStripMenuItem"
         Me.ActiveScanToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F7
-        Me.ActiveScanToolStripMenuItem.Size = New System.Drawing.Size(252, 30)
+        Me.ActiveScanToolStripMenuItem.Size = New System.Drawing.Size(246, 30)
         Me.ActiveScanToolStripMenuItem.Text = "Active Scan"
         '
         'NoActiveScanToolStripMenuItem
         '
         Me.NoActiveScanToolStripMenuItem.Name = "NoActiveScanToolStripMenuItem"
         Me.NoActiveScanToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F8
-        Me.NoActiveScanToolStripMenuItem.Size = New System.Drawing.Size(252, 30)
+        Me.NoActiveScanToolStripMenuItem.Size = New System.Drawing.Size(246, 30)
         Me.NoActiveScanToolStripMenuItem.Text = "No Active Scan"
+        '
+        'OptionsToolStripMenuItem
+        '
+        Me.OptionsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.UpdateListeDesLogosToolStripMenuItem})
+        Me.OptionsToolStripMenuItem.Name = "OptionsToolStripMenuItem"
+        Me.OptionsToolStripMenuItem.Size = New System.Drawing.Size(88, 29)
+        Me.OptionsToolStripMenuItem.Text = "O&ptions"
+        '
+        'UpdateListeDesLogosToolStripMenuItem
+        '
+        Me.UpdateListeDesLogosToolStripMenuItem.Name = "UpdateListeDesLogosToolStripMenuItem"
+        Me.UpdateListeDesLogosToolStripMenuItem.Size = New System.Drawing.Size(281, 30)
+        Me.UpdateListeDesLogosToolStripMenuItem.Text = "Update Liste des Logos"
         '
         'OpenFileDialog1
         '
@@ -1309,19 +1322,6 @@ Partial Class Form1
         Me.CheckBox_ShowLogs.TabIndex = 8
         Me.CheckBox_ShowLogs.Text = "Afficher Logs"
         Me.CheckBox_ShowLogs.UseVisualStyleBackColor = True
-        '
-        'OptionsToolStripMenuItem
-        '
-        Me.OptionsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.UpdateListeDesLogosToolStripMenuItem})
-        Me.OptionsToolStripMenuItem.Name = "OptionsToolStripMenuItem"
-        Me.OptionsToolStripMenuItem.Size = New System.Drawing.Size(88, 29)
-        Me.OptionsToolStripMenuItem.Text = "O&ptions"
-        '
-        'UpdateListeDesLogosToolStripMenuItem
-        '
-        Me.UpdateListeDesLogosToolStripMenuItem.Name = "UpdateListeDesLogosToolStripMenuItem"
-        Me.UpdateListeDesLogosToolStripMenuItem.Size = New System.Drawing.Size(281, 30)
-        Me.UpdateListeDesLogosToolStripMenuItem.Text = "Update Liste des Logos"
         '
         'Form1
         '
